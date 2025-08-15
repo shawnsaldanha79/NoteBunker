@@ -1,4 +1,4 @@
-package com.secure.notes;
+package com.secure.notebunker;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

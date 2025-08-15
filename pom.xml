@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.secure</groupId>
-	<artifactId>notes</artifactId>
+	<artifactId>notebunker</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>notes</name>
+	<name>notebunker</name>
 	<description>Secure Notes Project</description>
 	<url/>
 	<licenses>
