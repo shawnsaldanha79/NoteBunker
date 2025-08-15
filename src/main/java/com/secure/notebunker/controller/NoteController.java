@@ -2,6 +2,7 @@ package com.secure.notebunker.controller;
 
 import com.secure.notebunker.model.Note;
 import com.secure.notebunker.service.NoteService;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -9,12 +10,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/api/notes")
 public class NoteController {
-    private static final Logger logger = (Logger) LoggerFactory.getLogger(NoteController.class);
+    private static final Logger logger = LoggerFactory.getLogger(NoteController.class);
 
     private final NoteService noteService;
 

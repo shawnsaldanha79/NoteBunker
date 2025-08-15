@@ -16,16 +16,9 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(requests ->
                 requests
-                        .requestMatchers("/contact").permitAll()
-                        .requestMatchers("/public/**").permitAll()
-                        .requestMatchers("/admin/**").denyAll()
                         .anyRequest().authenticated()
         );
-//        http.formLogin(Customizer.withDefaults());
-        http.sessionManagement(session ->
-                session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        );
+        http.csrf(csrf -> csrf.disable());
         http.httpBasic(Customizer.withDefaults());
         return http.build();
     }
