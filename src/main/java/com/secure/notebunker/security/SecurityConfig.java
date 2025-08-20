@@ -5,15 +5,21 @@ import com.secure.notebunker.model.Role;
 import com.secure.notebunker.model.User;
 import com.secure.notebunker.repository.RoleRepository;
 import com.secure.notebunker.repository.UserRepository;
+import com.secure.notebunker.security.jwt.AuthEntryPointJwt;
+import com.secure.notebunker.security.jwt.AuthTokenFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 import java.time.LocalDate;
@@ -22,8 +28,15 @@ import java.time.LocalDate;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    private final AuthEntryPointJwt unauthorizedHandler;
+
+    @Autowired
+    public SecurityConfig(AuthEntryPointJwt unauthorizedHandler) {
+        this.unauthorizedHandler = unauthorizedHandler;
+    }
+
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http, AuthTokenFilter authTokenFilter) throws Exception {
         http.csrf(csrf ->
                 csrf
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
@@ -33,10 +46,22 @@ public class SecurityConfig {
                 requests
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/csrf-token").permitAll()
+                        .requestMatchers("/api/auth/public/**").permitAll()
                         .anyRequest().authenticated()
         );
+        http.exceptionHandling(exception ->
+                exception
+                        .authenticationEntryPoint(unauthorizedHandler)
+        );
+        http.addFilterBefore(authTokenFilter, UsernamePasswordAuthenticationFilter.class);
+        http.formLogin(Customizer.withDefaults());
         http.httpBasic(Customizer.withDefaults());
         return http.build();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
     }
 
     @Bean
