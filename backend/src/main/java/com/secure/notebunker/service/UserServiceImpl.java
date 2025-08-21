@@ -8,6 +8,7 @@ import com.secure.notebunker.repository.RoleRepository;
 import com.secure.notebunker.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,6 +29,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void updateUserRole(Long userId, String roleName) {
         User user = userRepository.findById(userId).orElseThrow(() ->
                 new RuntimeException("User not found")
