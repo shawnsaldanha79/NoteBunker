@@ -60,3 +60,5 @@ export const ContextProvider = ({ children }) => {
         </ContextApi.Provider>
     );
 };
+
+export default ContextApi;
