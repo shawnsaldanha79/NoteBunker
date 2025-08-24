@@ -1,1 +1,40 @@
 @import "tailwindcss";
+
+@theme {
+  /* Color palette */
+  --color-headerColor: #242530;
+  --color-textColor: #ffffff;
+  --color-btnColor: #0172F4;
+  --color-noteColor: #FFCF7C;
+  --color-customRed: rgba(172, 30, 35, 1);
+  --color-testimonialCard: #F9F9F9;
+
+  /* Font families */
+  --font-inter: Inter;
+  /* --font-dancingScript: Dancing Script; */
+
+  /* Font sizes */
+  --text-logoText: 30px;
+  --text-customText: 15px;
+  --text-tablehHeaderText: 16px;
+  --text-headerText: 50px;
+  --text-tableHeader: 15px;
+
+  /* Line heights */
+  --leading-headerText: 60px;
+  --leading-tableHeader: 25px;
+
+  /* Font weights */
+  --font-weight-customWeight: 500;
+
+  /* Height values */
+  --height-headerHeight: 74px;
+  --max-height-navbarHeight: 420px;
+  --min-height-customHeight: 530px;
+
+  /* Box shadows */
+  --shadow-custom: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Content sources */
+@source "../src/**/*.{html,js}";

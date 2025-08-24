@@ -1,17 +1,14 @@
-import { useState } from "react";
+import { BrowserRouter as Router } from "react-router-dom";
+import Navbar from "./components/layout/Navbar";
+import Footer from "./components/layout/Footer";
 
-function App() {
-    const [count, setCount] = useState(0);
+const App = () => {
     return (
-        <>
-            <h1 className="text-3xl text-amber-600">Vite + React</h1>
-            <div>
-                <button className="bg-amber-600 text-white m-4 p-4 rounded" type="button" onClick={() => setCount((count) => count + 1)}>
-                    count is {count}
-                </button>
-            </div>
-        </>
+        <Router>
+            <Navbar />
+            <Footer />
+        </Router>
     );
-}
+};
 
 export default App;
