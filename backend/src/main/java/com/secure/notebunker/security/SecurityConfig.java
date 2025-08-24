@@ -37,6 +37,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, AuthTokenFilter authTokenFilter) throws Exception {
+        http.cors(Customizer.withDefaults());
         http.csrf(csrf ->
                 csrf
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
