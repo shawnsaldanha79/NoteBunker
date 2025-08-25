@@ -26,7 +26,7 @@ const Navbar = () => {
         <header className="h-headerHeight z-50 text-textColor bg-headerColor shadow-sm flex items-center sticky top-0">
             <nav className="sm:px-10 px-4 flex w-full h-full items-center justify-between">
                 <Link to="/">
-                    <h3 className="font-inter text-logoText">
+                    <h3 className="text-logoText">
                         NoteBunker
                     </h3>
                 </Link>
@@ -35,7 +35,7 @@ const Navbar = () => {
                         headerToggle
                             ? "min-h-fit max-h-navbarHeight lg:py-0 py-4 shadow-md shadow-slate-700 lg:shadow-none"
                             : "h-0 overflow-hidden"
-                    } lg:h-auto transition-all duration-100 font-inter text-textColor flex lg:flex-row flex-col lg:gap-8 gap-2`}
+                    } lg:h-auto transition-all duration-100 text-textColor flex lg:flex-row flex-col lg:gap-8 gap-2`}
                 >
                     {token && (
                         <>

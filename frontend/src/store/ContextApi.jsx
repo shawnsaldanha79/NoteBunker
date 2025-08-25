@@ -6,13 +6,10 @@ import api from "../services/api";
 const ContextApi = createContext();
 
 export const ContextProvider = ({ children }) => {
-    const getToken = localStorage.getItem("JWT_TOKEN")
-        ? JSON.stringify(localStorage.getItem("JWT_TOKEN"))
-        : null;
+    const getToken = localStorage.getItem("JWT_TOKEN");
     const isAdmin = localStorage.getItem("IS_ADMIN")
         ? JSON.stringify(localStorage.getItem("IS_ADMIN"))
         : false;
-
     const [token, setToken] = useState(getToken);
     const [currentUser, setCurrrentUser] = useState(null);
     const [openSidebar, setOpenSidebar] = useState(false);
@@ -23,6 +20,7 @@ export const ContextProvider = ({ children }) => {
         if (user?.username) {
             try {
                 const { data } = await api.get(`/auth/user`);
+                console.log("User data: ", data);
                 const roles = data.roles;
                 if (roles.includes("ROLE_ADMIN")) {
                     localStorage.setItem("IS_ADMIN", JSON.stringify(true));
@@ -34,7 +32,9 @@ export const ContextProvider = ({ children }) => {
                 setCurrrentUser(data);
             } catch (error) {
                 console.log("Error fetching current user:", error);
-                toast.error("Error fetching current user");
+                if (error.response?.status !== 401) {
+                    toast.error("Error fetching current user");
+                }
             }
         }
     };

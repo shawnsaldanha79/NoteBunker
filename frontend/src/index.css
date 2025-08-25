@@ -10,8 +10,7 @@
   --color-testimonialCard: #F9F9F9;
 
   /* Font families */
-  --font-inter: Inter;
-  /* --font-dancingScript: Dancing Script; */
+  /* --font-inter: Inter; */
 
   /* Font sizes */
   --text-logoText: 30px;
@@ -34,6 +33,12 @@
 
   /* Box shadows */
   --shadow-custom: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+@layer base {
+  html {
+    font-family: 'Inter', sans-serif;
+  }
 }
 
 /* Content sources */

@@ -11,34 +11,52 @@ const api = axios.create({
     withCredentials: true,
 });
 
+// Function to get CSRF token from cookie
+const getCsrfTokenFromCookie = () => {
+    const name = "XSRF-TOKEN=";
+    const decodedCookie = decodeURIComponent(document.cookie);
+    const ca = decodedCookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) === ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) === 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+};
+
 api.interceptors.request.use(
     async (config) => {
         const token = localStorage.getItem("JWT_TOKEN");
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
         }
-        let csrfToken = localStorage.getItem("CSRF_TOKEN");
-        if (!csrfToken) {
-            try {
-                const response = await axios.get(
-                    `${import.meta.env.VITE_API_URL}/api/csrf-token`,
-                    {
-                        withCredentials: true,
-                    }
-                );
-                csrfToken = response.data.token;
-                localStorage.setItem("CSRF_TOKEN", csrfToken);
-            } catch (error) {
-                console.log("Error fetching CSRF token:", error);
-            }
-        }
+        
+        // Get CSRF token from cookie instead of localStorage
+        const csrfToken = getCsrfTokenFromCookie();
         if (csrfToken) {
-            config.headers["X-CSRF-TOKEN"] = csrfToken;
+            config.headers["X-XSRF-TOKEN"] = csrfToken;
         }
-        console.log("X-CSRF-TOKEN: ", csrfToken);
+        
         return config;
     },
     (error) => {
+        return Promise.reject(error);
+    }
+);
+
+// Response interceptor to handle token expiration and errors
+api.interceptors.response.use(
+    (response) => response,
+    (error) => {
+        if (error.response?.status === 401) {
+            localStorage.removeItem("JWT_TOKEN");
+            localStorage.removeItem("USER");
+            window.location.href = "/login";
+        }
         return Promise.reject(error);
     }
 );
