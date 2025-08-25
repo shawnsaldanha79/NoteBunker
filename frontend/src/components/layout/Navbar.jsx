@@ -9,7 +9,7 @@ const Navbar = () => {
     const pathName = useLocation().pathname;
     const navigate = useNavigate();
 
-    const { token, setToken, setCurrentUser, isAdmin, setIsAdmin } =
+    const { token, setToken, setCurrentUser, isAdminUser, setIsAdminUser } =
         useMyContext();
     const handleLogout = () => {
         localStorage.removeItem("JWT_TOKEN");
@@ -18,7 +18,7 @@ const Navbar = () => {
         localStorage.removeItem("IS_ADMIN");
         setToken(null);
         setCurrentUser(null);
-        setIsAdmin(false);
+        setIsAdminUser(false);
         navigate("/login");
     };
 
@@ -97,7 +97,7 @@ const Navbar = () => {
                                     Profile
                                 </li>
                             </Link>
-                            {isAdmin && (
+                            {isAdminUser && (
                                 <Link to="/admin/users">
                                     <li
                                         className={`py-2 cursor-pointer uppercase hover:text-slate-300 ${
