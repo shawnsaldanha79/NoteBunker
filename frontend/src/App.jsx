@@ -1,13 +1,7 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import { Toaster } from "react-hot-toast";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
-import Login from "./pages/Auth/Login";
-import Signup from "./pages/Auth/Signup";
-import AboutPage from "./pages/AboutPage";
-import ContactPage from "./pages/ContactPage";
 import Login from "./pages/Auth/Login";
 import Signup from "./pages/Auth/Signup";
 import AboutPage from "./pages/AboutPage";
