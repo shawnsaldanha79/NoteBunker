@@ -143,7 +143,7 @@ const NoteDetails = () => {
             >
                 Go Back
             </Buttons>
-            <div className="py-6 px-8 min-h-customHeight shadow-lg shadow-gray-300 rounded-md">
+            <div className="py-6 px-8 min-h-customHeight shadow-lg shadow-gray-300 rounded-md bg-white">
                 {!loading && (
                     <div className="flex justify-end py-2 gap-2">
                         {!editEnable ? (
@@ -188,17 +188,18 @@ const NoteDetails = () => {
                 ) : (
                     <>
                         {editEnable ? (
-                            <>
-                                <div className="h-72 sm:mb-20 lg:mb-14 mb-28">
+                            <div className="flex flex-col h-full">
+                                <div className="flex-grow min-h-72 mb-4">
                                     <TipTapEditor
                                         content={editorContent}
                                         onChange={handleChange}
                                     />
-
+                                </div>
+                                <div className="sticky bottom-0 bg-white py-4 border-t border-gray-200 mt-auto">
                                     <Buttons
                                         disabled={noteEditLoader}
                                         onClickhandler={onNoteEditHandler}
-                                        className="bg-customRed md:mt-16 mt-28 text-white px-4 py-2 hover:text-slate-300 rounded-sm"
+                                        className="bg-customRed text-white px-4 py-2 hover:text-slate-300 rounded-sm"
                                     >
                                         {noteEditLoader ? (
                                             <span>Loading...</span>
@@ -207,10 +208,10 @@ const NoteDetails = () => {
                                         )}
                                     </Buttons>
                                 </div>
-                            </>
+                            </div>
                         ) : (
                             <>
-                                <div className="text-slate-900 tipTap-content">
+                                <div className="text-slate-900 tipTap-content overflow-auto max-h-[calc(100vh-300px)]">
                                     {parse(editorContent || "")}
                                 </div>
 

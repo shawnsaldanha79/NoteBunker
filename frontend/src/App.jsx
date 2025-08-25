@@ -12,6 +12,7 @@ import ProtectedRoute from "./components/common/ProtectedRoute";
 import AccessDenied from "./pages/Auth/AccessDenied";
 import NoteDetails from "./pages/Notes/NoteDetails";
 import CreateNote from "./pages/Notes/CreateNote";
+import LandingPage from "./pages/LandingPage/LandingPage";
 
 const App = () => {
     return (
@@ -19,6 +20,7 @@ const App = () => {
             <Navbar />
             <Toaster position="bottom-center" reverseOrder={false} />
             <Routes>
+                <Route path="/" element={<LandingPage />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/about" element={<AboutPage />} />
