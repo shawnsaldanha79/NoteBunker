@@ -7,6 +7,9 @@ import Signup from "./pages/Auth/Signup";
 import AboutPage from "./pages/AboutPage";
 import ContactPage from "./pages/ContactPage";
 import NotFound from "./pages/NotFound";
+import AllNotes from "./pages/Notes/AllNotes";
+import ProtectedRoute from "./components/common/ProtectedRoute";
+import AccessDenied from "./pages/Auth/AccessDenied";
 
 const App = () => {
     return (
@@ -18,6 +21,18 @@ const App = () => {
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/about" element={<AboutPage />} />
                 <Route path="/contact" element={<ContactPage />} />
+
+                <Route
+                    path="/notes"
+                    element={
+                        <ProtectedRoute>
+                            <AllNotes />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route path="/access-denied" element={<AccessDenied />} />
+
                 <Route path="/*" element={<NotFound />} />
             </Routes>
             <Footer />

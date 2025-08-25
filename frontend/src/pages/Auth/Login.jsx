@@ -6,7 +6,7 @@ import { jwtDecode } from "jwt-decode";
 import InputField from "../../components/common/InputField";
 import { GrGoogle, GrGithub } from "react-icons/gr";
 import Divider from "@mui/material/Divider";
-import Buttons from "../../utils/Buttons";
+import Buttons from "../../components/common/Buttons";
 import toast from "react-hot-toast";
 import { useMyContext } from "../../store/useMyContext";
 
@@ -47,7 +47,7 @@ const Login = () => {
             setLoading(true);
             const response = await api.post("/auth/public/signin", data);
             toast.success("Login successful");
-            console.log(response)
+            console.log(response);
             reset();
             if (response.status === 200 && response.data.jwtToken) {
                 console.log("jwtToken: ", response.data.jwtToken);
