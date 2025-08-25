@@ -47,10 +47,8 @@ const Login = () => {
             setLoading(true);
             const response = await api.post("/auth/public/signin", data);
             toast.success("Login successful");
-            console.log(response);
             reset();
             if (response.status === 200 && response.data.jwtToken) {
-                console.log("jwtToken: ", response.data.jwtToken);
                 setJwtToken(response.data.jwtToken);
                 const decodedToken = jwtDecode(response.data.jwtToken);
                 if (decodedToken.is2faEnabled) {

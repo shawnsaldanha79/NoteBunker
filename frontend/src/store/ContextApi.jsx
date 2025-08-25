@@ -20,7 +20,6 @@ export const ContextProvider = ({ children }) => {
         if (user?.username) {
             try {
                 const { data } = await api.get(`/auth/user`);
-                console.log("User data: ", data);
                 const roles = data.roles;
                 if (roles.includes("ROLE_ADMIN")) {
                     localStorage.setItem("IS_ADMIN", JSON.stringify(true));
@@ -31,7 +30,6 @@ export const ContextProvider = ({ children }) => {
                 }
                 setCurrrentUser(data);
             } catch (error) {
-                console.log("Error fetching current user:", error);
                 if (error.response?.status !== 401) {
                     toast.error("Error fetching current user");
                 }

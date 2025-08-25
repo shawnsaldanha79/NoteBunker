@@ -2,20 +2,21 @@ import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../../services/api";
 import { BeatLoader } from "react-spinners";
-import ReactQuill from "react-quill";
 import moment from "moment";
 import { DataGrid } from "@mui/x-data-grid";
 import Buttons from "../../components/common/Buttons";
 import Errors from "../../components/common/Errors";
 import toast from "react-hot-toast";
+import parse from "html-react-parser";
 import Modals from "../../components/common/PopModal";
 import { auditLogscolumn } from "../../utils/tableColumns";
+import TipTapEditor from "../../components/common/TipTapEditor";
 
 const NoteDetails = () => {
     const { id } = useParams();
     const [modalOpen, setModalOpen] = useState(false);
     const [note, setNote] = useState(null);
-    const [editorContent, setEditorContent] = useState(note?.parsedContent);
+    const [editorContent, setEditorContent] = useState("");
     const [auditLogs, setAuditLogs] = useState([]);
     const [error, setError] = useState(null);
     const [isAdmin, setIsAdmin] = useState(false);
@@ -23,15 +24,21 @@ const NoteDetails = () => {
     const [noteEditLoader, setNoteEditLoader] = useState(false);
     const [editEnable, setEditEnable] = useState(false);
     const navigate = useNavigate();
-
     const fetchNoteDetails = useCallback(async () => {
         setLoading(true);
         try {
             const response = await api.get("/notes");
             const foundNote = response.data.find((n) => n.id.toString() === id);
             if (foundNote) {
-                foundNote.parsedContent = JSON.parse(foundNote.content).content;
+                let content;
+                try {
+                    const parsedContent = JSON.parse(foundNote.content);
+                    content = parsedContent.content || foundNote.content;
+                } catch {
+                    content = foundNote.content;
+                }
                 setNote(foundNote);
+                setEditorContent(content);
             } else {
                 setError("Invalid Note");
             }
@@ -71,16 +78,10 @@ const NoteDetails = () => {
             fetchNoteDetails();
             checkAdminRole();
             if (isAdmin) {
-                fetchAuditLogs();
+                // fetchAuditLogs();
             }
         }
     }, [id, isAdmin, fetchAuditLogs, fetchNoteDetails]);
-
-    useEffect(() => {
-        if (note?.parsedContent) {
-            setEditorContent(note.parsedContent);
-        }
-    }, [note?.parsedContent]);
 
     const rows = auditLogs.map((item) => {
         const formattedDate = moment(item.timestamp).format(
@@ -102,7 +103,7 @@ const NoteDetails = () => {
         return <Errors message={error} />;
     }
 
-    const handleChange = (content, delta, source, editor) => {
+    const handleChange = (content) => {
         setEditorContent(content);
     };
 
@@ -189,36 +190,9 @@ const NoteDetails = () => {
                         {editEnable ? (
                             <>
                                 <div className="h-72 sm:mb-20 lg:mb-14 mb-28">
-                                    <ReactQuill
-                                        className="h-full"
-                                        value={editorContent}
+                                    <TipTapEditor
+                                        content={editorContent}
                                         onChange={handleChange}
-                                        modules={{
-                                            toolbar: [
-                                                [
-                                                    {
-                                                        header: [
-                                                            1, 2, 3, 4, 5, 6,
-                                                        ],
-                                                    },
-                                                ],
-                                                [{ size: [] }],
-                                                [
-                                                    "bold",
-                                                    "italic",
-                                                    "underline",
-                                                    "strike",
-                                                    "blockquote",
-                                                ],
-                                                [
-                                                    { list: "ordered" },
-                                                    { list: "bullet" },
-                                                    { indent: "-1" },
-                                                    { indent: "+1" },
-                                                ],
-                                                ["clean"],
-                                            ],
-                                        }}
                                     />
 
                                     <Buttons
@@ -236,12 +210,9 @@ const NoteDetails = () => {
                             </>
                         ) : (
                             <>
-                                <p
-                                    className="text-slate-900 ql-editor"
-                                    dangerouslySetInnerHTML={{
-                                        __html: note?.parsedContent,
-                                    }}
-                                ></p>
+                                <div className="text-slate-900 tipTap-content">
+                                    {parse(editorContent || "")}
+                                </div>
 
                                 {isAdmin && (
                                     <div className="mt-10">

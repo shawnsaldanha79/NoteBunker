@@ -10,6 +10,8 @@ import NotFound from "./pages/NotFound";
 import AllNotes from "./pages/Notes/AllNotes";
 import ProtectedRoute from "./components/common/ProtectedRoute";
 import AccessDenied from "./pages/Auth/AccessDenied";
+import NoteDetails from "./pages/Notes/NoteDetails";
+import CreateNote from "./pages/Notes/CreateNote";
 
 const App = () => {
     return (
@@ -23,10 +25,26 @@ const App = () => {
                 <Route path="/contact" element={<ContactPage />} />
 
                 <Route
+                    path="/notes/:id"
+                    element={
+                        <ProtectedRoute>
+                            <NoteDetails />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
                     path="/notes"
                     element={
                         <ProtectedRoute>
                             <AllNotes />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/create-note"
+                    element={
+                        <ProtectedRoute>
+                            <CreateNote />
                         </ProtectedRoute>
                     }
                 />
