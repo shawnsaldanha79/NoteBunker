@@ -14,7 +14,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/notes")
 public class NoteController {
-    private static final Logger logger = LoggerFactory.getLogger(NoteController.class);
 
     private final NoteService noteService;
 
@@ -28,7 +27,6 @@ public class NoteController {
             @AuthenticationPrincipal UserDetails userDetails
     ) {
         String username = userDetails.getUsername();
-        logger.info("User: " + userDetails);
         return noteService.getNotesForUser(username);
     }
 
@@ -38,7 +36,6 @@ public class NoteController {
             @AuthenticationPrincipal UserDetails userDetails
     ) {
         String username = userDetails.getUsername();
-        logger.info("User: " + userDetails);
         return noteService.createNoteForUser(username, content);
     }
 
@@ -49,7 +46,6 @@ public class NoteController {
             @AuthenticationPrincipal UserDetails userDetails
     ) {
         String username = userDetails.getUsername();
-        logger.info("User: " + username);
         return noteService.updateNoteForUser(noteId, username, content);
     }
 
@@ -59,7 +55,6 @@ public class NoteController {
             @AuthenticationPrincipal UserDetails userDetails
     ) {
         String username = userDetails.getUsername();
-        logger.info("User: " + username);
         noteService.deleteNoteForUser(noteId, username);
     }
 }
