@@ -9,7 +9,7 @@ import Errors from "../../components/common/Errors";
 import toast from "react-hot-toast";
 import parse from "html-react-parser";
 import Modals from "../../components/common/PopModal";
-import { auditLogscolumn } from "../../utils/tableColumns";
+import { noteAuditLogColumns } from "../../utils/tableColumns";
 import TipTapEditor from "../../components/common/TipTapEditor";
 
 const NoteDetails = () => {
@@ -78,7 +78,7 @@ const NoteDetails = () => {
             fetchNoteDetails();
             checkAdminRole();
             if (isAdmin) {
-                // fetchAuditLogs();
+                fetchAuditLogs();
             }
         }
     }, [id, isAdmin, fetchAuditLogs, fetchNoteDetails]);
@@ -225,7 +225,7 @@ const NoteDetails = () => {
                                             <DataGrid
                                                 className="w-fit mx-auto"
                                                 rows={rows}
-                                                columns={auditLogscolumn}
+                                                columns={noteAuditLogColumns}
                                                 initialState={{
                                                     pagination: {
                                                         paginationModel: {
