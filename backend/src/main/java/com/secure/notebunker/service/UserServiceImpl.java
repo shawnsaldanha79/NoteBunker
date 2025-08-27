@@ -7,6 +7,7 @@ import com.secure.notebunker.model.User;
 import com.secure.notebunker.repository.RoleRepository;
 import com.secure.notebunker.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,14 +19,34 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public UserServiceImpl(
             UserRepository userRepository,
-            RoleRepository roleRepository
+            RoleRepository roleRepository,
+            PasswordEncoder passwordEncoder
     ) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public UserDTO getUserById(Long id) {
+        User user = userRepository.findById(id).orElseThrow();
+        return convertToDTO(user);
+    }
+
+    @Override
+    public User findByUsername(String username) {
+        Optional<User> user = userRepository.findByUserName(username);
+        return user.orElseThrow(() -> new RuntimeException("User not found with username: " + username));
     }
 
     @Override
@@ -43,21 +64,55 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    @Transactional
+    public void updatePassword(Long userId, String password) {
+        try {
+            User user = userRepository.findById(userId).orElseThrow(() ->
+                    new RuntimeException("User not found")
+            );
+            user.setPassword(passwordEncoder.encode(password));
+            userRepository.save(user);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to update password");
+        }
     }
 
     @Override
-    public UserDTO getUserById(Long id) {
-//        return userRepository.findById(id).orElseThrow();
-        User user = userRepository.findById(id).orElseThrow();
-        return convertToDTO(user);
+    @Transactional
+    public void updateAccountLockStatus(Long userId, boolean lock) {
+        User user = userRepository.findById(userId).orElseThrow(() ->
+                new RuntimeException("User not found")
+        );
+        user.setAccountNonLocked(!lock);
+        userRepository.save(user);
     }
 
     @Override
-    public User findByUsername(String username) {
-        Optional<User> user = userRepository.findByUserName(username);
-        return user.orElseThrow(() -> new RuntimeException("User not found with username: " + username));
+    @Transactional
+    public void updateAccountExpiryStatus(Long userId, boolean expire) {
+        User user = userRepository.findById(userId).orElseThrow(() ->
+                new RuntimeException("User not found")
+        );
+        user.setAccountNonExpired(!expire);
+        userRepository.save(user);
+    }
+    @Override
+    @Transactional
+    public void updateAccountEnabledStatus(Long userId, boolean enabled) {
+        User user = userRepository.findById(userId).orElseThrow(() ->
+                new RuntimeException("User not found")
+        );
+        user.setEnabled(!enabled);
+        userRepository.save(user);
+    }
+    @Override
+    @Transactional
+    public void updateCredentialsExpiryStatus(Long userId, boolean expire) {
+        User user = userRepository.findById(userId).orElseThrow(() ->
+                new RuntimeException("User not found")
+        );
+        user.setCredentialsNonExpired(!expire);
+        userRepository.save(user);
     }
 
     private UserDTO convertToDTO(User user) {
