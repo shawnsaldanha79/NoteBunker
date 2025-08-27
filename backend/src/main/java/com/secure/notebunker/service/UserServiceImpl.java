@@ -2,34 +2,50 @@ package com.secure.notebunker.service;
 
 import com.secure.notebunker.dto.UserDTO;
 import com.secure.notebunker.model.AppRole;
+import com.secure.notebunker.model.PasswordResetToken;
 import com.secure.notebunker.model.Role;
 import com.secure.notebunker.model.User;
+import com.secure.notebunker.repository.PasswordResetTokenRepository;
 import com.secure.notebunker.repository.RoleRepository;
 import com.secure.notebunker.repository.UserRepository;
+import com.secure.notebunker.util.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
 
+    @Value("${frontend.url}")
+    private String frontendUrl;
+
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+    private final PasswordResetTokenRepository passwordResetTokenRepository;
+    private final EmailService emailService;
 
     @Autowired
     public UserServiceImpl(
             UserRepository userRepository,
             RoleRepository roleRepository,
-            PasswordEncoder passwordEncoder
+            PasswordEncoder passwordEncoder,
+            PasswordResetTokenRepository passwordResetTokenRepository,
+            EmailService emailService
     ) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
+        this.passwordResetTokenRepository = passwordResetTokenRepository;
+        this.emailService = emailService;
     }
 
     @Override
@@ -79,6 +95,39 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
+    public void generatePasswordResetToken(String email) {
+        User user = userRepository.findByEmail(email).orElseThrow(() ->
+                new RuntimeException("User not found")
+        );
+        String token = UUID.randomUUID().toString();
+        Instant expiryDate = Instant.now().plus(24, ChronoUnit.HOURS);
+        PasswordResetToken resetToken = new PasswordResetToken(token, expiryDate, user);
+        passwordResetTokenRepository.save(resetToken);
+        String resetUrl = frontendUrl + "/reset-password?token=" + token;
+        emailService.sendPasswordResetEmail(user.getEmail(), resetUrl);
+    }
+
+    @Override
+    @Transactional
+    public void resetPassword(String token, String newPassword) {
+        PasswordResetToken resetToken = passwordResetTokenRepository.findByToken(token).orElseThrow(() ->
+                new RuntimeException("Invalid password reset token!")
+        );
+        if (resetToken.isUsed()) {
+            throw new RuntimeException("Password reset token has already been used!");
+        }
+        if (resetToken.getExpiryDate().isBefore(Instant.now())) {
+            throw new RuntimeException("Password reset token has expired!");
+        }
+        User user = resetToken.getUser();
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+        resetToken.setUsed(true);
+        passwordResetTokenRepository.save(resetToken);
+    }
+
+    @Override
+    @Transactional
     public void updateAccountLockStatus(Long userId, boolean lock) {
         User user = userRepository.findById(userId).orElseThrow(() ->
                 new RuntimeException("User not found")
@@ -96,6 +145,7 @@ public class UserServiceImpl implements UserService {
         user.setAccountNonExpired(!expire);
         userRepository.save(user);
     }
+
     @Override
     @Transactional
     public void updateAccountEnabledStatus(Long userId, boolean enabled) {
@@ -105,6 +155,7 @@ public class UserServiceImpl implements UserService {
         user.setEnabled(!enabled);
         userRepository.save(user);
     }
+
     @Override
     @Transactional
     public void updateCredentialsExpiryStatus(Long userId, boolean expire) {

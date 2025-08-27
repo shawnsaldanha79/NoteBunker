@@ -106,7 +106,7 @@ public class AuthController {
         Role role = null;
         if (strRoles == null || strRoles.isEmpty()) {
             roleRepository.findByRoleName(AppRole.ROLE_USER).orElseThrow(() ->
-                new RuntimeException("Error: Role not found!")
+                    new RuntimeException("Error: Role not found!")
             );
         } else {
             String roleStr = strRoles.iterator().next();
@@ -158,7 +158,38 @@ public class AuthController {
     }
 
     @GetMapping("/username")
-    public String currentUserName(@AuthenticationPrincipal UserDetails userDetails) {
-        return (userDetails != null) ? userDetails.getUsername() : "";
+    public ResponseEntity<?> currentUserName(@AuthenticationPrincipal UserDetails userDetails) {
+        return new ResponseEntity<Object>(userDetails != null ? userDetails.getUsername() : "",
+                HttpStatus.OK
+        );
+    }
+
+    @PostMapping("/public/forgot-password")
+    public ResponseEntity<?> forgotPassword(@RequestParam String email) {
+        try {
+            userService.generatePasswordResetToken(email);
+            return new ResponseEntity<>(new MessageResponse("Password reset email sent"),
+                    HttpStatus.OK
+            );
+        } catch (Exception e) {
+            return new ResponseEntity<>(new MessageResponse("Error sending password reset email"),
+                    HttpStatus.INTERNAL_SERVER_ERROR
+            );
+        }
+    }
+
+    @PostMapping("/public/reset-password")
+    public ResponseEntity<?> resetPassword(@RequestParam String token, @RequestParam String newPassword) {
+        try {
+            userService.resetPassword(token, newPassword);
+            return new ResponseEntity<>(new MessageResponse("Password reset successful"),
+                    HttpStatus.OK
+            );
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(new MessageResponse(e.getMessage()),
+                    HttpStatus.BAD_REQUEST
+            );
+        }
     }
 }

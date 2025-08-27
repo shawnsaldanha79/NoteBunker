@@ -18,6 +18,8 @@ public interface UserService {
 
     void updatePassword(Long userId, String password);
 
+    void generatePasswordResetToken(String email);
+
     void updateAccountLockStatus(Long userId, boolean lock);
 
     void updateAccountExpiryStatus(Long userId, boolean expire);
@@ -25,4 +27,6 @@ public interface UserService {
     void updateAccountEnabledStatus(Long userId, boolean enable);
 
     void updateCredentialsExpiryStatus(Long userId, boolean expire);
+
+    void resetPassword(String token, String newPassword);
 }
