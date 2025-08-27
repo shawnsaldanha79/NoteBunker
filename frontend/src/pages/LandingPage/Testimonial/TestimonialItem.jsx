@@ -10,7 +10,7 @@ const TestimonialItem = ({ title, text, name, status, imgurl }) => {
             transition={{ duration: 0.8 }}
             className="bg-testimonialCard flex flex-col p-6 shadow-md shadow-slate-500 rounded-md"
         >
-            <h1 className="text-slate-900 font-montserrat text-2xl font-bold pb-6">
+            <h1 className="text-slate-900 text-2xl font-bold pb-6">
                 {title}
             </h1>
 

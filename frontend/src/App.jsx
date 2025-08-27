@@ -14,6 +14,8 @@ import NoteDetails from "./pages/Notes/NoteDetails";
 import CreateNote from "./pages/Notes/CreateNote";
 import LandingPage from "./pages/LandingPage/LandingPage";
 import Admin from "./pages/Admin/Admin";
+import ForgotPassword from "./pages/Auth/ForgotPassword";
+import ResetPassword from "./pages/Auth/ResetPassword";
 
 const App = () => {
     return (
@@ -24,6 +26,8 @@ const App = () => {
                 <Route path="/" element={<LandingPage />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/reset-password" element={<ResetPassword />} />
                 <Route path="/about" element={<AboutPage />} />
                 <Route path="/contact" element={<ContactPage />} />
 

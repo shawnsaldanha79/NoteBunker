@@ -22,7 +22,7 @@ const LandingPage = () => {
         <div className="min-h-[calc(100vh-74px)] flex justify-center">
             <div className="lg:w-[80%] w-full py-16 space-y-4">
                 <motion.h1
-                    className="font-montserrat uppercase text-headerColor xl:text-headerText md:text-4xl text-2xl mx-auto text-center font-bold sm:w-[95%] w-full"
+                    className="uppercase text-headerColor xl:text-headerText md:text-4xl text-2xl mx-auto text-center font-bold sm:w-[95%] w-full"
                     initial="hidden"
                     animate="visible"
                     variants={fadeInFromTop}
@@ -72,13 +72,13 @@ const LandingPage = () => {
                     )}
                 </motion.div>
                 <div className="sm:pt-14 pt-0 xl:px-16 md:px-10">
-                    <h1 className="font-montserrat uppercase text-headerColor xl:text-headerText md:text-4xl text-2xl mx-auto text-center font-bold w-full">
+                    <h1 className="uppercase text-headerColor xl:text-headerText md:text-4xl text-2xl mx-auto text-center font-bold w-full">
                         More Reasons Company Around the world workable
                     </h1>
                     <Brands />
                     <State />
                     <div className="pb-10">
-                        <h1 className="font-montserrat uppercase text-headerColor pb-16 xl:text-headerText md:text-4xl text-2xl mx-auto text-center font-bold sm:w-[95%] w-full">
+                        <h1 className="uppercase text-headerColor pb-16 xl:text-headerText md:text-4xl text-2xl mx-auto text-center font-bold sm:w-[95%] w-full">
                             Testimonial
                         </h1>
                         <Testimonial />

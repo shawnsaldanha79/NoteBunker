@@ -61,7 +61,7 @@ const ForgotPassword = () => {
                 className="sm:w-[450px] w-[360px] shadow-custom py-8 sm:px-8 px-4"
             >
                 <div>
-                    <h1 className="font-montserrat text-center font-bold text-2xl">
+                    <h1 className="text-center font-bold text-2xl">
                         Forgot Password?
                     </h1>
                     <p className="text-slate-600 text-center">
