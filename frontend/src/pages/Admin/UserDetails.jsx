@@ -37,6 +37,7 @@ const UserDetails = () => {
         setLoading(true);
         try {
             const response = await api.get(`/admin/user/${userId}`);
+            console.log(response.data);
             setUser(response.data);
             setSelectedRole(response.data.role?.roleName || "");
         } catch (err) {
@@ -182,13 +183,13 @@ const UserDetails = () => {
                                 onSubmit={handleSubmit(handleSavePassword)}
                             >
                                 <InputField
-                                    label="UserName"
+                                    label="Username"
                                     required
                                     id="username"
                                     className="w-full"
                                     type="text"
-                                    message="*UserName is required"
-                                    placeholder="Enter your UserName"
+                                    message="*Username is required"
+                                    placeholder="Enter your Username"
                                     register={register}
                                     errors={errors}
                                     readOnly
@@ -298,7 +299,7 @@ const UserDetails = () => {
                         <div className="flex flex-col gap-4 py-4">
                             <div className="flex items-center gap-2">
                                 <label className="text-slate-600 text-sm font-semibold uppercase">
-                                    Lock Account
+                                    Account Locked
                                 </label>
                                 <input
                                     className="text-14 w-5 h-5"
@@ -315,7 +316,7 @@ const UserDetails = () => {
                             </div>
                             <div className="flex items-center gap-2">
                                 <label className="text-slate-600 text-sm font-semibold uppercase">
-                                    Account Expiry
+                                    Account Expired
                                 </label>
                                 <input
                                     className="text-14 w-5 h-5"
@@ -332,13 +333,13 @@ const UserDetails = () => {
                             </div>
                             <div className="flex items-center gap-2">
                                 <label className="text-slate-600 text-sm font-semibold uppercase">
-                                    Account Enabled
+                                    Account Disabled
                                 </label>
                                 <input
                                     className="text-14 w-5 h-5"
                                     type="checkbox"
                                     name="enabled"
-                                    checked={user?.enabled}
+                                    checked={!user?.enabled}
                                     onChange={(e) =>
                                         handleCheckboxChange(
                                             e,

@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import api from "../../services/api";
 import { DataGrid } from "@mui/x-data-grid";
-import { Blocks } from "react-loader-spinner";
+import { BeatLoader } from "react-spinners";
 import Errors from "../../components/common/Errors";
 import moment from "moment";
 import { noteAuditLogColumns } from "../../utils/tableColumns";
@@ -63,14 +63,11 @@ const AuditLogsDetails = () => {
             </div>
             {loading ? (
                 <div className="flex flex-col justify-center items-center h-72">
-                    <Blocks
+                    <BeatLoader
                         height="70"
                         width="70"
                         color="#4fa94d"
-                        ariaLabel="blocks-loading"
-                        wrapperStyle={{}}
-                        wrapperClass="blocks-wrapper"
-                        visible={true}
+                        loading={true}
                     />
                     <span>Please wait...</span>
                 </div>

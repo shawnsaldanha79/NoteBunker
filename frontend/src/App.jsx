@@ -13,6 +13,7 @@ import AccessDenied from "./pages/Auth/AccessDenied";
 import NoteDetails from "./pages/Notes/NoteDetails";
 import CreateNote from "./pages/Notes/CreateNote";
 import LandingPage from "./pages/LandingPage/LandingPage";
+import Admin from "./pages/Admin/Admin";
 
 const App = () => {
     return (
@@ -52,6 +53,15 @@ const App = () => {
                 />
 
                 <Route path="/access-denied" element={<AccessDenied />} />
+
+                <Route
+                    path="/admin/*"
+                    element={
+                        <ProtectedRoute adminPage={true}>
+                            <Admin />
+                        </ProtectedRoute>
+                    }
+                />
 
                 <Route path="/*" element={<NotFound />} />
             </Routes>

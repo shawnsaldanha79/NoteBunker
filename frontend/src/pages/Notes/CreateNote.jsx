@@ -1,4 +1,3 @@
-// CreateNote.jsx (updated)
 import { useState } from "react";
 import { MdNoteAlt } from "react-icons/md";
 import { useNavigate } from "react-router-dom";

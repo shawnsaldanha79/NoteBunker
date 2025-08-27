@@ -21,17 +21,17 @@ export const adminAuditLogColumns = [
     },
     {
         field: "username",
-        headerName: "UserName",
+        headerName: "Username",
         width: 180,
         ...commonColumnStyles,
-        renderHeader: () => <span>UserName</span>,
+        renderHeader: () => <span>Username</span>,
     },
     {
         field: "timestamp",
-        headerName: "TimeStamp",
+        headerName: "Timestamp",
         width: 220,
         ...commonColumnStyles,
-        renderHeader: () => <span>TimeStamp</span>,
+        renderHeader: () => <span>Timestamp</span>,
         renderCell: (params) => (
             <div className="flex items-center justify-center gap-1">
                 <MdDateRange className="text-slate-700 text-lg" />
@@ -142,18 +142,18 @@ export const noteAuditLogColumns = [
 export const userListColumns = [
     {
         field: "username",
-        headerName: "UserName",
+        headerName: "Username",
         minWidth: 200,
         ...commonColumnStyles,
-        renderHeader: () => <span className="text-center">UserName</span>,
+        renderHeader: () => <span className="text-center">Username</span>,
     },
     {
         field: "email",
         headerName: "Email",
         width: 260,
         ...commonColumnStyles,
-        headerClassName: "text-black font-semibold text-center border",
-        cellClassName: "text-slate-700 font-normal border text-center",
+        headerClassName: "text-black font-semibold text-center",
+        cellClassName: "text-slate-700 font-normal text-center",
         renderHeader: () => <span>Email</span>,
         renderCell: (params) => (
             <div className="flex items-center justify-center gap-1">

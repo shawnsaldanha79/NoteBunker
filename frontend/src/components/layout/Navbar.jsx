@@ -26,9 +26,7 @@ const Navbar = () => {
         <header className="h-headerHeight z-50 text-textColor bg-headerColor shadow-sm flex items-center sticky top-0">
             <nav className="sm:px-10 px-4 flex w-full h-full items-center justify-between">
                 <Link to="/">
-                    <h3 className="text-logoText">
-                        NoteBunker
-                    </h3>
+                    <h3 className="text-logoText">NoteBunker</h3>
                 </Link>
                 <ul
                     className={`lg:static absolute left-0 top-16 w-full lg:w-fit lg:px-0 sm:px-10 px-4 lg:bg-transparent bg-headerColor ${
