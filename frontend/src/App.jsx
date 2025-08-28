@@ -16,6 +16,7 @@ import LandingPage from "./pages/LandingPage/LandingPage";
 import Admin from "./pages/Admin/Admin";
 import ForgotPassword from "./pages/Auth/ForgotPassword";
 import ResetPassword from "./pages/Auth/ResetPassword";
+import OAuth2RedirectHandler from "./pages/Auth/OAuth2RedirectHandler";
 
 const App = () => {
     return (
@@ -65,6 +66,11 @@ const App = () => {
                             <Admin />
                         </ProtectedRoute>
                     }
+                />
+
+                <Route
+                    path="/oauth2/redirect"
+                    element={<OAuth2RedirectHandler />}
                 />
 
                 <Route path="/*" element={<NotFound />} />
