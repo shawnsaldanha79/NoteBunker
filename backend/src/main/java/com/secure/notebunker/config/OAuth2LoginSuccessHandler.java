@@ -22,9 +22,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -102,14 +100,19 @@ public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSu
         Map<String, Object> attributes = oAuth2User.getAttributes();
         String email = (String) attributes.get("email");
         System.out.println("OAuth2LoginSuccessHandler: " + username + " : " + email);
+        Set<SimpleGrantedAuthority> authorities = oAuth2User.getAuthorities().stream().map(authority ->
+                new SimpleGrantedAuthority(authority.getAuthority())).collect(Collectors.toSet());
+        User user = userService.findByEmail(email).orElseThrow(() ->
+                new RuntimeException("User not found")
+        );
+        authorities.add(new SimpleGrantedAuthority(user.getRole().getRoleName().name()));
         UserDetailsImpl userDetails = new UserDetailsImpl(
                 null,
                 username,
                 email,
                 null,
                 false,
-                oAuth2User.getAuthorities().stream().map(authority ->
-                        new SimpleGrantedAuthority(authority.getAuthority())).collect(Collectors.toList())
+                authorities
         );
         String jwtToken = jwtUtils.generateTokenFromUsername(userDetails);
         String targetUrl = UriComponentsBuilder.fromUriString(frontendUrl + "/oauth2/redirect")
