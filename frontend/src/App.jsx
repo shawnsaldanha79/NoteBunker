@@ -17,6 +17,7 @@ import Admin from "./pages/Admin/Admin";
 import ForgotPassword from "./pages/Auth/ForgotPassword";
 import ResetPassword from "./pages/Auth/ResetPassword";
 import OAuth2RedirectHandler from "./pages/Auth/OAuth2RedirectHandler";
+import UserProfile from "./pages/Auth/UserProfile";
 
 const App = () => {
     return (
@@ -64,6 +65,15 @@ const App = () => {
                     element={
                         <ProtectedRoute adminPage={true}>
                             <Admin />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/profile"
+                    element={
+                        <ProtectedRoute>
+                            <UserProfile />
                         </ProtectedRoute>
                     }
                 />
