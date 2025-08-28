@@ -1,5 +1,6 @@
 package com.secure.notebunker.security;
 
+import com.secure.notebunker.config.OAuth2LoginSuccessHandler;
 import com.secure.notebunker.model.AppRole;
 import com.secure.notebunker.model.Role;
 import com.secure.notebunker.model.User;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -29,10 +31,12 @@ import java.time.LocalDate;
 public class SecurityConfig {
 
     private final AuthEntryPointJwt unauthorizedHandler;
+    private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
 
     @Autowired
-    public SecurityConfig(AuthEntryPointJwt unauthorizedHandler) {
+    public SecurityConfig(AuthEntryPointJwt unauthorizedHandler, @Lazy OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler) {
         this.unauthorizedHandler = unauthorizedHandler;
+        this.oAuth2LoginSuccessHandler = oAuth2LoginSuccessHandler;
     }
 
     @Bean
@@ -44,13 +48,17 @@ public class SecurityConfig {
                         .ignoringRequestMatchers("api/auth/public/**")
         );
         http.authorizeHttpRequests(requests ->
-                requests
-                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/api/audit/**").hasRole("ADMIN")
-                        .requestMatchers("/api/csrf-token").permitAll()
-                        .requestMatchers("/api/auth/public/**").permitAll()
-                        .anyRequest().authenticated()
-        );
+                        requests
+                                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                                .requestMatchers("/api/audit/**").hasRole("ADMIN")
+                                .requestMatchers("/api/csrf-token").permitAll()
+                                .requestMatchers("/api/auth/public/**").permitAll()
+                                .requestMatchers("/oauth2/**").permitAll()
+                                .anyRequest().authenticated()
+                )
+                .oauth2Login(oauth2 -> {
+                    oauth2.successHandler(oAuth2LoginSuccessHandler);
+                });
         http.exceptionHandling(exception ->
                 exception
                         .authenticationEntryPoint(unauthorizedHandler)

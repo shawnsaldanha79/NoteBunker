@@ -5,6 +5,7 @@ import com.secure.notebunker.model.User;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
 
@@ -13,6 +14,8 @@ public interface UserService {
     UserDTO getUserById(Long id);
 
     User findByUsername(String username);
+
+    Optional<User> findByEmail(String email);
 
     void updateUserRole(Long userId, String roleName);
 
@@ -29,4 +32,6 @@ public interface UserService {
     void updateCredentialsExpiryStatus(Long userId, boolean expire);
 
     void resetPassword(String token, String newPassword);
+
+    void registerUser(User newUser);
 }
