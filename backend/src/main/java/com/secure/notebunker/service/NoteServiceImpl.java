@@ -21,6 +21,7 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
+    @Transactional
     public List<Note> getNotesForUser(String username) {
         return noteRepository.findByOwnerUsername(username);
     }
