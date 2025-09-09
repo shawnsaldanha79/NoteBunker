@@ -1,57 +1,37 @@
 import { Link } from "react-router-dom";
 import Buttons from "../../components/common/Buttons";
-import { motion } from "framer-motion";
 import Brands from "./Brands/Brands";
-import State from "./State";
+import Features from "./Features";
 import Testimonial from "./Testimonial/Testimonials";
 import { useMyContext } from "../../store/useMyContext";
-
-const fadeInFromTop = {
-    hidden: { opacity: 0, y: -50 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
-};
-const fadeInFromBotom = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-};
 
 const LandingPage = () => {
     const { token } = useMyContext();
 
     return (
-        <div className="min-h-[calc(100vh-74px)] flex justify-center">
+        <div className="min-h-[calc(100vh-74px)] bg-gray-900 text-gray-100 flex justify-center">
             <div className="lg:w-[80%] w-full py-16 space-y-4">
-                <motion.h1
-                    className="uppercase text-headerColor xl:text-headerText md:text-4xl text-2xl mx-auto text-center font-bold sm:w-[95%] w-full"
-                    initial="hidden"
-                    animate="visible"
-                    variants={fadeInFromTop}
-                >
-                    Turn your thoughts into secure, organized notes And Faster.
-                </motion.h1>
-                <h3 className="text-logoText md:text-2xl text-xl font-semibold text-slate-800 text-center">
+                <div className="uppercase text-yellow-400 xl:text-6xl md:text-4xl text-2xl mx-auto text-center font-bold sm:w-[95%] w-full">
+                    Turn your thoughts into secure, organized notes
+                </div>
+                <h3 className="text-yellow-300 md:text-2xl text-xl font-semibold text-center">
                     The #1 secure note-taking app.
                 </h3>
-                <p className="text-slate-700 text-center sm:w-[80%] w-[90%] mx-auto">
+                <p className="text-gray-300 text-center sm:w-[80%] w-[90%] mx-auto">
                     Manage your notes effortlessly and securely. Just type,
                     save, and access them from anywhere with robust encryption
                     and seamless synchronization.
                 </p>
-                <motion.div
-                    initial="hidden"
-                    animate="visible"
-                    variants={fadeInFromBotom}
-                    className="flex items-center justify-center gap-3 py-10"
-                >
+                <div className="flex items-center justify-center gap-4 py-10">
                     {token ? (
                         <>
                             <Link to="/create-note">
-                                <Buttons className="sm:w-52 w-44 bg-customRed font-semibold hover:scale-105 transition-all duration-200 cursor-pointer text-white px-10 py-3 rounded-sm">
+                                <Buttons className="w-48 bg-yellow-500 hover:bg-yellow-600 font-semibold transition-all duration-200 cursor-pointer text-gray-900 px-6 py-3 rounded-lg">
                                     Create Note
                                 </Buttons>
                             </Link>
                             <Link to="/notes">
-                                <Buttons className="sm:w-52 w-44 bg-btnColor font-semibold hover:scale-105 transition-all duration-200 cursor-pointer text-white px-10 py-3 rounded-sm">
+                                <Buttons className="w-48 border border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-gray-900 font-semibold transition-all duration-200 cursor-pointer px-6 py-3 rounded-lg">
                                     My Notes
                                 </Buttons>
                             </Link>
@@ -59,27 +39,27 @@ const LandingPage = () => {
                     ) : (
                         <>
                             <Link to="/login">
-                                <Buttons className="sm:w-52 w-44 bg-customRed font-semibold hover:scale-105 transition-all duration-200 cursor-pointer text-white px-10 py-3 rounded-sm">
-                                    SignIn
+                                <Buttons className="w-48 bg-yellow-500 hover:bg-yellow-600 font-semibold transition-all duration-200 cursor-pointer text-gray-900 px-6 py-3 rounded-lg">
+                                    Sign In
                                 </Buttons>
                             </Link>
                             <Link to="/signup">
-                                <Buttons className="sm:w-52 w-44 bg-btnColor font-semibold hover:scale-105 transition-all duration-200 cursor-pointer text-white px-10 py-3 rounded-sm">
-                                    SignUp
+                                <Buttons className="w-48 border border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-gray-900 font-semibold transition-all duration-200 cursor-pointer px-6 py-3 rounded-lg">
+                                    Sign Up
                                 </Buttons>
                             </Link>
                         </>
                     )}
-                </motion.div>
+                </div>
                 <div className="sm:pt-14 pt-0 xl:px-16 md:px-10">
-                    <h1 className="uppercase text-headerColor xl:text-headerText md:text-4xl text-2xl mx-auto text-center font-bold w-full">
-                        More Reasons Company Around the world workable
+                    <h1 className="uppercase text-yellow-400 xl:text-4xl md:text-3xl text-2xl mx-auto text-center font-bold w-full mb-16">
+                        Trusted by professionals worldwide
                     </h1>
                     <Brands />
-                    <State />
+                    <Features />
                     <div className="pb-10">
-                        <h1 className="uppercase text-headerColor pb-16 xl:text-headerText md:text-4xl text-2xl mx-auto text-center font-bold sm:w-[95%] w-full">
-                            Testimonial
+                        <h1 className="uppercase text-yellow-400 pb-16 xl:text-4xl md:text-3xl text-2xl mx-auto text-center font-bold sm:w-[95%] w-full">
+                            What Our Users Say
                         </h1>
                         <Testimonial />
                     </div>

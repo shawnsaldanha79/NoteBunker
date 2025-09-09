@@ -23,7 +23,7 @@ const CreateNote = () => {
             setLoading(true);
             const noteData = { content: editorContent };
             await api.post("/notes", noteData);
-            toast.success("Note create successful");
+            toast.success("Note created successfully");
             navigate("/notes");
         } catch (error) {
             toast.error("Error creating note");
@@ -34,25 +34,39 @@ const CreateNote = () => {
     };
 
     return (
-        <div className="min-h-[calc(100vh-74px)] p-10">
-            <div className="flex items-center gap-1 pb-5">
-                <h1 className="text-slate-800 sm:text-4xl text-2xl font-semibold">
-                    Create New Note
-                </h1>
-                <MdNoteAlt className="text-slate-700 text-4xl" />
-            </div>
+        <div className="min-h-[calc(100vh-74px)] bg-gray-900 p-6">
+            <div className="max-w-4xl mx-auto">
+                <div className="flex items-center gap-3 pb-8">
+                    <MdNoteAlt className="text-yellow-400 text-4xl" />
+                    <h1 className="text-yellow-400 text-3xl font-bold">
+                        Create New Note
+                    </h1>
+                </div>
 
-            <div className="h-72 sm:mb-20 lg:mb-14 mb-28">
-                <TipTapEditor content={editorContent} onChange={handleChange} />
-            </div>
+                <div className="bg-gray-800 rounded-2xl p-6 shadow-lg mb-6">
+                    <div className="h-96 mb-6">
+                        <TipTapEditor
+                            content={editorContent}
+                            onChange={handleChange}
+                        />
+                    </div>
 
-            <Buttons
-                disabled={loading}
-                onClickhandler={handleSubmit}
-                className="bg-customRed text-white px-4 py-2 hover:text-slate-300 rounded-sm"
-            >
-                {loading ? <span>Loading...</span> : " Create Note"}
-            </Buttons>
+                    <Buttons
+                        disabled={loading}
+                        onClickhandler={handleSubmit}
+                        className="bg-yellow-500 text-gray-900 px-6 py-3 rounded-lg font-semibold hover:bg-yellow-600 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                        {loading ? (
+                            <span className="flex items-center">
+                                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-gray-900 mr-2"></div>
+                                Creating...
+                            </span>
+                        ) : (
+                            "Create Note"
+                        )}
+                    </Buttons>
+                </div>
+            </div>
         </div>
     );
 };

@@ -105,51 +105,52 @@ const Login = () => {
     }, [navigate, token]);
 
     return (
-        <div className="min-h-[calc(100vh-74px)] flex justify-center items-center">
+        <div className="min-h-screen bg-gray-900 flex justify-center items-center py-8 px-4">
             {step === 1 ? (
                 <form
                     onSubmit={handleSubmit(onLoginHandler)}
-                    className="sm:w-[450px] w-[360px] shadow-custom py-8 sm:px-8 px-4"
+                    className="sm:w-[450px] w-full max-w-md bg-gray-800 rounded-2xl shadow-2xl py-8 sm:px-8 px-6"
                 >
-                    <div>
-                        <h1 className="font-montserrat text-center font-bold text-2xl">
+                    <div className="text-center mb-6">
+                        <h1 className="text-yellow-400 font-bold text-2xl mb-2">
                             Login Here
                         </h1>
-                        <p className="text-slate-600 text-center">
-                            Please Enter your username and password
+                        <p className="text-gray-400 mb-6">
+                            Please enter your username and password
                         </p>
-                        <div className="flex items-center justify-between gap-1 py-5">
-                            <Link
-                                to={`${apiUrl}/oauth2/authorization/google`}
-                                className="flex gap-1 items-center justify-center flex-1 border p-2 shadow-sm shadow-slate-200 rounded-md hover:bg-slate-300 transition-all duration-300"
+
+                        <div className="flex flex-col gap-3 mb-6">
+                            <a
+                                href={`${apiUrl}/oauth2/authorization/google`}
+                                className="flex gap-2 items-center justify-center bg-gray-700 p-3 rounded-lg hover:bg-gray-600 transition-colors duration-200"
                             >
-                                <GrGoogle className="text-2xl" />
-                                <span className="font-semibold sm:text-customText text-xs">
+                                <GrGoogle className="text-xl text-red-400" />
+                                <span className="font-semibold text-gray-200">
                                     Login with Google
                                 </span>
-                            </Link>
-                            <Link
-                                to={`${apiUrl}/oauth2/authorization/github`}
-                                className="flex gap-1 items-center justify-center flex-1 border p-2 shadow-sm shadow-slate-200 rounded-md hover:bg-slate-300 transition-all duration-300"
+                            </a>
+                            <a
+                                href={`${apiUrl}/oauth2/authorization/github`}
+                                className="flex gap-2 items-center justify-center bg-gray-700 p-3 rounded-lg hover:bg-gray-600 transition-colors duration-200"
                             >
-                                <GrGithub className="text-2xl" />
-                                <span className="font-semibold sm:text-customText text-xs">
+                                <GrGithub className="text-xl text-gray-200" />
+                                <span className="font-semibold text-gray-200">
                                     Login with Github
                                 </span>
-                            </Link>
+                            </a>
                         </div>
 
-                        <Divider className="font-semibold">OR</Divider>
+                        <Divider className="text-gray-400 mb-6">OR</Divider>
                     </div>
 
-                    <div className="flex flex-col gap-2">
+                    <div className="flex flex-col gap-4 mb-6">
                         <InputField
-                            label="UserName"
+                            label="Username"
                             required
                             id="username"
                             type="text"
-                            message="*UserName is required"
-                            placeholder="type your username"
+                            message="*Username is required"
+                            placeholder="Enter your username"
                             register={register}
                             errors={errors}
                         />
@@ -159,58 +160,65 @@ const Login = () => {
                             id="password"
                             type="password"
                             message="*Password is required"
-                            placeholder="type your password"
+                            placeholder="Enter your password"
                             register={register}
                             errors={errors}
                         />
                     </div>
+
                     <Buttons
                         disabled={loading}
                         onClickhandler={() => {}}
-                        className="bg-customRed font-semibold text-white w-full py-2 hover:text-slate-400 transition-colors duration-100 rounded-sm my-3"
-                        type="text"
+                        className="bg-yellow-500 text-gray-900 font-semibold w-full py-3 hover:bg-yellow-600 transition-colors duration-200 rounded-lg mb-4"
                     >
-                        {loading ? <span>Loading...</span> : "LogIn"}
+                        {loading ? (
+                            <span className="flex items-center justify-center">
+                                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-gray-900 mr-2"></div>
+                                Logging in...
+                            </span>
+                        ) : (
+                            "Login"
+                        )}
                     </Buttons>
-                    <p className="text-sm text-slate-700">
+
+                    <p className="text-center text-gray-400 text-sm mb-6">
                         <Link
-                            className="underline hover:text-black"
+                            className="text-yellow-400 hover:text-yellow-300 transition-colors duration-200"
                             to="/forgot-password"
                         >
                             Forgot Password?
                         </Link>
                     </p>
 
-                    <p className="text-center text-sm text-slate-700 mt-6">
+                    <p className="text-center text-gray-400 text-sm">
                         Don't have an account?{" "}
                         <Link
-                            className="font-semibold underline hover:text-black"
+                            className="text-yellow-400 font-semibold hover:text-yellow-300 transition-colors duration-200"
                             to="/signup"
                         >
-                            SignUp
+                            Sign Up
                         </Link>
                     </p>
                 </form>
             ) : (
                 <form
                     onSubmit={handleSubmit(onVerify2FaHandler)}
-                    className="sm:w-[450px] w-[360px] shadow-custom py-8 sm:px-8 px-4"
+                    className="sm:w-[450px] w-full max-w-md bg-gray-800 rounded-2xl shadow-2xl py-8 sm:px-8 px-6"
                 >
-                    <div>
-                        <h1 className="font-montserrat text-center font-bold text-2xl">
+                    <div className="text-center mb-6">
+                        <h1 className="text-yellow-400 font-bold text-2xl mb-2">
                             Verify 2FA
                         </h1>
-                        <p className="text-slate-600 text-center">
-                            Enter the correct code to complete 2FA
-                            Authentication
+                        <p className="text-gray-400">
+                            Enter the code from your authenticator app
                         </p>
 
-                        <Divider className="font-semibold pb-4"></Divider>
+                        <Divider className="bg-gray-700 my-6" />
                     </div>
 
-                    <div className="flex flex-col gap-2 mt-4">
+                    <div className="flex flex-col gap-4 mb-6">
                         <InputField
-                            label="Enter Code"
+                            label="Verification Code"
                             required
                             id="code"
                             type="text"
@@ -220,13 +228,20 @@ const Login = () => {
                             errors={errors}
                         />
                     </div>
+
                     <Buttons
                         disabled={loading}
                         onClickhandler={() => {}}
-                        className="bg-customRed font-semibold text-white w-full py-2 hover:text-slate-400 transition-colors duration-100 rounded-sm my-3"
-                        type="text"
+                        className="bg-yellow-500 text-gray-900 font-semibold w-full py-3 hover:bg-yellow-600 transition-colors duration-200 rounded-lg"
                     >
-                        {loading ? <span>Loading...</span> : "Verify 2FA"}
+                        {loading ? (
+                            <span className="flex items-center justify-center">
+                                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-gray-900 mr-2"></div>
+                                Verifying...
+                            </span>
+                        ) : (
+                            "Verify Code"
+                        )}
                     </Buttons>
                 </form>
             )}

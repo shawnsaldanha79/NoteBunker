@@ -2,36 +2,24 @@ import TestimonialItem from "./TestimonialItem";
 
 const Testimonials = () => {
     return (
-        <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-x-4 gap-y-10 md:px-0 px-5">
+        <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6 md:px-0 px-5">
             <TestimonialItem
-                title="Natives Api"
-                text=" It is a long established fact that a reader will be distracted by the
-        readable content of a page when looking at its layout. The point of
-        using Lorem Ipsum is that it has a more-or-less normal distribution of
-        letters, as opposed to using 'Content here, content here', making it
-        look like readable English."
-                name="Easin"
-                status="Creator"
+                title="Game Changer"
+                text="NoteBunker has completely transformed how I organize my thoughts and research. The security features give me peace of mind knowing my sensitive notes are protected."
+                name="Sarah Johnson"
+                status="Research Scientist"
             />
             <TestimonialItem
-                title="Natives Api"
-                text=" It is a long established fact that a reader will be distracted by the
-        readable content of a page when looking at its layout. The point of
-        using Lorem Ipsum is that it has a more-or-less normal distribution of
-        letters, as opposed to using 'Content here, content here', making it
-        look like readable English."
-                name="Easin"
-                status="Creator"
+                title="Incredibly Reliable"
+                text="As a journalist, I need immediate access to my notes wherever I am. NoteBunker has never let me down, even in areas with poor connectivity."
+                name="Michael Chen"
+                status="Journalist"
             />
             <TestimonialItem
-                title="Natives Api"
-                text=" It is a long established fact that a reader will be distracted by the
-        readable content of a page when looking at its layout. The point of
-        using Lorem Ipsum is that it has a more-or-less normal distribution of
-        letters, as opposed to using 'Content here, content here', making it
-        look like readable English."
-                name="Easin"
-                status="Creator"
+                title="Perfect for Students"
+                text="The organization features and quick search make NoteBunker ideal for managing all my lecture notes and research materials in one secure place."
+                name="Emily Rodriguez"
+                status="Graduate Student"
             />
         </div>
     );

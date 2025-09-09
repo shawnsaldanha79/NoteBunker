@@ -116,7 +116,7 @@ const NoteDetails = () => {
             setNoteEditLoader(true);
             const noteData = { content: editorContent };
             await api.put(`/notes/${id}`, noteData);
-            toast.success("Note update successful");
+            toast.success("Note updated successfully");
             setEditEnable(false);
             fetchNoteDetails();
             checkAdminRole();
@@ -136,116 +136,146 @@ const NoteDetails = () => {
     };
 
     return (
-        <div className="min-h-[calc(100vh-74px)] md:px-10 md:py-8 sm:px-6 py-4 px-4">
-            <Buttons
-                onClickhandler={onBackHandler}
-                className="bg-btnColor px-4 py-2 rounded-md text-white hover:text-slate-200 mb-3"
-            >
-                Go Back
-            </Buttons>
-            <div className="py-6 px-8 min-h-customHeight shadow-lg shadow-gray-300 rounded-md bg-white">
-                {!loading && (
-                    <div className="flex justify-end py-2 gap-2">
-                        {!editEnable ? (
-                            <Buttons
-                                onClickhandler={() =>
-                                    setEditEnable(!editEnable)
-                                }
-                                className="bg-btnColor text-white px-3 py-1 rounded-md"
-                            >
-                                Edit
-                            </Buttons>
-                        ) : (
-                            <Buttons
-                                onClickhandler={() =>
-                                    setEditEnable(!editEnable)
-                                }
-                                className="bg-customRed text-white px-3 py-1 rounded-md"
-                            >
-                                Cancel
-                            </Buttons>
-                        )}
-                        {!editEnable && (
-                            <Buttons
-                                onClickhandler={() => setModalOpen(true)}
-                                className="bg-customRed text-white px-3 py-1 rounded-md"
-                            >
-                                Delete
-                            </Buttons>
-                        )}
-                    </div>
-                )}
-                {loading ? (
-                    <div className="flex flex-col justify-center items-center h-96">
-                        <BeatLoader
-                            height="70"
-                            width="70"
-                            color="#4fa94d"
-                            loading={true}
-                        />
-                        <span>Please wait...</span>
-                    </div>
-                ) : (
-                    <>
-                        {editEnable ? (
-                            <div className="flex flex-col h-full">
-                                <div className="flex-grow min-h-72 mb-4">
-                                    <TipTapEditor
-                                        content={editorContent}
-                                        onChange={handleChange}
-                                    />
-                                </div>
-                                <div className="sticky bottom-0 bg-white py-4 border-t border-gray-200 mt-auto">
-                                    <Buttons
-                                        disabled={noteEditLoader}
-                                        onClickhandler={onNoteEditHandler}
-                                        className="bg-customRed text-white px-4 py-2 hover:text-slate-300 rounded-sm"
-                                    >
-                                        {noteEditLoader ? (
-                                            <span>Loading...</span>
-                                        ) : (
-                                            " Update Note"
-                                        )}
-                                    </Buttons>
-                                </div>
-                            </div>
-                        ) : (
-                            <>
-                                <div className="text-slate-900 tipTap-content overflow-auto max-h-[calc(100vh-300px)]">
-                                    {parse(editorContent || "")}
-                                </div>
+        <div className="min-h-[calc(100vh-74px)] bg-gray-900 py-6 px-4">
+            <div className="max-w-6xl mx-auto">
+                <Buttons
+                    onClickhandler={onBackHandler}
+                    className="bg-gray-700 text-yellow-400 px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors duration-200 mb-4"
+                >
+                    ← Go Back
+                </Buttons>
 
-                                {isAdmin && (
-                                    <div className="mt-10">
-                                        <h1 className="text-2xl text-center text-slate-700 font-semibold uppercase pt-10 pb-4">
-                                            Audit Logs
-                                        </h1>
+                <div className="bg-gray-800 rounded-2xl shadow-2xl p-6">
+                    {!loading && (
+                        <div className="flex justify-end py-2 gap-3 mb-4">
+                            {!editEnable ? (
+                                <Buttons
+                                    onClickhandler={() =>
+                                        setEditEnable(!editEnable)
+                                    }
+                                    className="bg-yellow-500 text-gray-900 px-4 py-2 rounded-lg font-semibold hover:bg-yellow-600 transition-colors duration-200"
+                                >
+                                    Edit
+                                </Buttons>
+                            ) : (
+                                <Buttons
+                                    onClickhandler={() =>
+                                        setEditEnable(!editEnable)
+                                    }
+                                    className="bg-red-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-red-700 transition-colors duration-200"
+                                >
+                                    Cancel
+                                </Buttons>
+                            )}
+                            {!editEnable && (
+                                <Buttons
+                                    onClickhandler={() => setModalOpen(true)}
+                                    className="bg-red-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-red-700 transition-colors duration-200"
+                                >
+                                    Delete
+                                </Buttons>
+                            )}
+                        </div>
+                    )}
 
-                                        <div className="overflow-x-auto">
-                                            <DataGrid
-                                                className="w-fit mx-auto"
-                                                rows={rows}
-                                                columns={noteAuditLogColumns}
-                                                initialState={{
-                                                    pagination: {
-                                                        paginationModel: {
-                                                            pageSize: 6,
-                                                        },
-                                                    },
-                                                }}
-                                                pageSizeOptions={[6]}
-                                                disableRowSelectionOnClick
-                                                disableColumnResize
-                                            />
-                                        </div>
+                    {loading ? (
+                        <div className="flex flex-col justify-center items-center h-96">
+                            <BeatLoader
+                                height="70"
+                                width="70"
+                                color="#fbbf24"
+                                loading={true}
+                            />
+                            <span className="text-gray-300 mt-4">
+                                Loading note...
+                            </span>
+                        </div>
+                    ) : (
+                        <>
+                            {editEnable ? (
+                                <div className="flex flex-col h-full">
+                                    <div className="flex-grow min-h-96 mb-6">
+                                        <TipTapEditor
+                                            content={editorContent}
+                                            onChange={handleChange}
+                                        />
                                     </div>
-                                )}
-                            </>
-                        )}
-                    </>
-                )}
+                                    <div className="sticky bottom-0 bg-gray-800 py-4 border-t border-gray-700">
+                                        <Buttons
+                                            disabled={noteEditLoader}
+                                            onClickhandler={onNoteEditHandler}
+                                            className="bg-yellow-500 text-gray-900 px-6 py-3 rounded-lg font-semibold hover:bg-yellow-600 transition-colors duration-200 disabled:opacity-50"
+                                        >
+                                            {noteEditLoader ? (
+                                                <span className="flex items-center">
+                                                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-gray-900 mr-2"></div>
+                                                    Updating...
+                                                </span>
+                                            ) : (
+                                                "Update Note"
+                                            )}
+                                        </Buttons>
+                                    </div>
+                                </div>
+                            ) : (
+                                <>
+                                    <div className="text-gray-100 tipTap-content overflow-auto max-h-[calc(100vh-300px)] bg-gray-700 rounded-lg p-6">
+                                        {parse(editorContent || "")}
+                                    </div>
+
+                                    {isAdmin && (
+                                        <div className="mt-10">
+                                            <h1 className="text-2xl text-yellow-400 font-bold text-center mb-6">
+                                                Audit Logs
+                                            </h1>
+
+                                            <div className="bg-gray-700 rounded-lg p-4">
+                                                <DataGrid
+                                                    className="bg-gray-800 text-gray-100 border-gray-600"
+                                                    rows={rows}
+                                                    columns={
+                                                        noteAuditLogColumns
+                                                    }
+                                                    initialState={{
+                                                        pagination: {
+                                                            paginationModel: {
+                                                                pageSize: 6,
+                                                            },
+                                                        },
+                                                    }}
+                                                    pageSizeOptions={[6]}
+                                                    disableRowSelectionOnClick
+                                                    disableColumnResize
+                                                    sx={{
+                                                        color: "#e5e7eb",
+                                                        "& .MuiDataGrid-cell": {
+                                                            borderColor:
+                                                                "#4b5563",
+                                                        },
+                                                        "& .MuiDataGrid-columnHeaders":
+                                                            {
+                                                                backgroundColor:
+                                                                    "#374151",
+                                                                color: "#fbbf24",
+                                                            },
+                                                        "& .MuiDataGrid-footerContainer":
+                                                            {
+                                                                backgroundColor:
+                                                                    "#374151",
+                                                                color: "#e5e7eb",
+                                                            },
+                                                    }}
+                                                />
+                                            </div>
+                                        </div>
+                                    )}
+                                </>
+                            )}
+                        </>
+                    )}
+                </div>
+                <Modals open={modalOpen} setOpen={setModalOpen} noteId={id} />
             </div>
-            <Modals open={modalOpen} setOpen={setModalOpen} noteId={id} />
         </div>
     );
 };

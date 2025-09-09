@@ -15,7 +15,7 @@ import { jwtDecode } from "jwt-decode";
 import { BeatLoader } from "react-spinners";
 import moment from "moment";
 import Errors from "../../components/common/Errors";
-import QRCode from 'react-qr-code';
+import QRCode from "react-qr-code";
 
 const UserProfile = () => {
     const { currentUser, token } = useMyContext();
@@ -271,69 +271,103 @@ const UserProfile = () => {
     };
 
     return (
-        <div className="min-h-[calc(100vh-74px)] py-10">
+        <div className="min-h-[calc(100vh-64px)] bg-gray-900 py-8 px-4">
             {pageLoader ? (
                 <div className="flex flex-col justify-center items-center h-72">
                     <BeatLoader
                         height="70"
                         width="70"
-                        color="#4fa94d"
+                        color="#fbbf24"
                         loading={true}
                     />
-                    <span>Please wait...</span>
+                    <span className="text-gray-300 mt-4">
+                        Loading profile...
+                    </span>
                 </div>
             ) : (
-                <div className="xl:w-[70%] lg:w-[80%] sm:w-[90%] w-full sm:mx-auto sm:px-0 px-4 min-h-[500px] flex lg:flex-row flex-col gap-4">
-                    <div className="flex-1 flex flex-col shadow-lg shadow-gray-300 gap-2 px-4 py-6">
-                        <div className="flex flex-col items-center gap-2">
+                <div className="max-w-6xl mx-auto min-h-[500px] flex lg:flex-row flex-col gap-6">
+                    <div className="flex-1 flex flex-col bg-gray-800 rounded-2xl shadow-lg p-6">
+                        <div className="flex flex-col items-center gap-4 mb-6">
                             <Avatar
                                 alt={currentUser?.username}
                                 src="/static/images/avatar/1.jpg"
+                                sx={{ width: 80, height: 80 }}
+                                className="border-2 border-yellow-500"
                             />
-                            <h3 className="font-semibold text-2xl">
+                            <h3 className="font-bold text-2xl text-yellow-400">
                                 {currentUser?.username}
                             </h3>
                         </div>
-                        <div className="my-4">
-                            <div className="space-y-2 px-4 mb-1">
-                                <h1 className="font-semibold text-md text-slate-800">
-                                    UserName:{" "}
-                                    <span className="text-slate-700 font-normal">
+
+                        <div className="mb-6">
+                            <div className="space-y-3 px-2 mb-4">
+                                <div className="flex justify-between items-center py-2 border-b border-gray-700">
+                                    <span className="font-semibold text-yellow-300">
+                                        Username:
+                                    </span>
+                                    <span className="text-gray-300">
                                         {currentUser?.username}
                                     </span>
-                                </h1>
-                                <h1 className="font-semibold text-md text-slate-800">
-                                    Role:{" "}
-                                    <span className="text-slate-700 font-normal">
+                                </div>
+                                <div className="flex justify-between items-center py-2 border-b border-gray-700">
+                                    <span className="font-semibold text-yellow-300">
+                                        Role:
+                                    </span>
+                                    <span className="text-gray-300">
                                         {currentUser && currentUser["roles"][0]}
                                     </span>
-                                </h1>
+                                </div>
+                                <div className="flex justify-between items-center py-2 border-b border-gray-700">
+                                    <span className="font-semibold text-yellow-300">
+                                        Email:
+                                    </span>
+                                    <span className="text-gray-300">
+                                        {currentUser?.email}
+                                    </span>
+                                </div>
                             </div>
-                            <div className="py-3">
-                                <Accordion expanded={openAccount}>
+
+                            <div className="mb-6">
+                                <Accordion
+                                    expanded={openAccount}
+                                    sx={{
+                                        backgroundColor: "#1f2937",
+                                        color: "white",
+                                        borderRadius: "0.5rem",
+                                        overflow: "hidden",
+                                        marginBottom: "1rem",
+                                        "&:before": { display: "none" },
+                                    }}
+                                >
                                     <AccordionSummary
-                                        className="shadow-md shadow-gray-300"
                                         onClick={onOpenAccountHandler}
-                                        expandIcon={<ArrowDropDownIcon />}
+                                        expandIcon={
+                                            <ArrowDropDownIcon
+                                                sx={{ color: "#fbbf24" }}
+                                            />
+                                        }
                                         aria-controls="panel1-content"
                                         id="panel1-header"
+                                        sx={{
+                                            backgroundColor: "#111827",
+                                            padding: "0.75rem 1rem",
+                                        }}
                                     >
-                                        <h3 className="text-slate-800 text-lg font-semibold">
+                                        <h3 className="text-yellow-400 text-lg font-semibold">
                                             Update User Credentials
                                         </h3>
                                     </AccordionSummary>
-                                    <AccordionDetails className="shadow-md shadow-gray-300">
+                                    <AccordionDetails sx={{ padding: "1rem" }}>
                                         <form
-                                            className="flex flex-col gap-3"
+                                            className="flex flex-col gap-4"
                                             onSubmit={handleSubmit(
                                                 handleUpdateCredential
                                             )}
                                         >
                                             <InputField
-                                                label="UserName"
+                                                label="Username"
                                                 required
                                                 id="username"
-                                                className="text-sm"
                                                 type="text"
                                                 message="*Username is required"
                                                 placeholder="Enter your username"
@@ -344,7 +378,6 @@ const UserProfile = () => {
                                                 label="Email"
                                                 required
                                                 id="email"
-                                                className="text-sm"
                                                 type="email"
                                                 message="*Email is required"
                                                 placeholder="Enter your email"
@@ -355,230 +388,269 @@ const UserProfile = () => {
                                             <InputField
                                                 label="Enter New Password"
                                                 id="password"
-                                                className="text-sm"
                                                 type="password"
                                                 message="*Password is required"
-                                                placeholder="type your password"
+                                                placeholder="Type your password"
                                                 register={register}
                                                 errors={errors}
                                                 min={6}
                                             />
                                             <Buttons
                                                 disabled={loading}
-                                                className="bg-customRed font-semibold flex justify-center text-white w-full py-2 hover:text-slate-400 transition-colors duration-100 rounded-sm my-3"
+                                                className="bg-yellow-500 text-gray-900 font-semibold w-full py-3 hover:bg-yellow-600 transition-colors duration-200 rounded-lg"
                                                 type="submit"
                                             >
                                                 {loading ? (
-                                                    <span>Loading...</span>
+                                                    <span className="flex items-center justify-center">
+                                                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-gray-900 mr-2"></div>
+                                                        Updating...
+                                                    </span>
                                                 ) : (
-                                                    "Update"
+                                                    "Update Credentials"
                                                 )}
                                             </Buttons>
                                         </form>
                                     </AccordionDetails>
                                 </Accordion>
-                                <div className="mt-6">
-                                    <Accordion expanded={openSetting}>
-                                        <AccordionSummary
-                                            className="shadow-md shadow-gray-300"
-                                            onClick={onOpenSettingHandler}
-                                            expandIcon={<ArrowDropDownIcon />}
-                                            aria-controls="panel1-content"
-                                            id="panel1-header"
-                                        >
-                                            <h3 className="text-slate-800 text-lg font-semibold">
-                                                Account Setting
-                                            </h3>
-                                        </AccordionSummary>
-                                        <AccordionDetails className="shadow-md shadow-gray-300">
-                                            <div className="flex flex-col gap-4">
+
+                                <Accordion
+                                    expanded={openSetting}
+                                    sx={{
+                                        backgroundColor: "#1f2937",
+                                        color: "white",
+                                        borderRadius: "0.5rem",
+                                        overflow: "hidden",
+                                        "&:before": { display: "none" },
+                                    }}
+                                >
+                                    <AccordionSummary
+                                        onClick={onOpenSettingHandler}
+                                        expandIcon={
+                                            <ArrowDropDownIcon
+                                                sx={{ color: "#fbbf24" }}
+                                            />
+                                        }
+                                        aria-controls="panel2-content"
+                                        id="panel2-header"
+                                        sx={{
+                                            backgroundColor: "#111827",
+                                            padding: "0.75rem 1rem",
+                                        }}
+                                    >
+                                        <h3 className="text-yellow-400 text-lg font-semibold">
+                                            Account Settings
+                                        </h3>
+                                    </AccordionSummary>
+                                    <AccordionDetails sx={{ padding: "1rem" }}>
+                                        <div className="flex flex-col gap-4">
+                                            <div className="flex justify-between items-center">
                                                 <div>
-                                                    <h3 className="text-slate-700 font-customWeight text-sm">
+                                                    <h3 className="text-yellow-300 font-semibold">
                                                         Account Expired
                                                     </h3>
-                                                    <Switch
-                                                        checked={accountExpired}
-                                                        onChange={
-                                                            handleAccountExpiryStatus
-                                                        }
-                                                        inputProps={{
-                                                            "aria-label":
-                                                                "controlled",
-                                                        }}
-                                                    />
+                                                    <p className="text-gray-400 text-sm">
+                                                        Prevent login if account
+                                                        is expired
+                                                    </p>
                                                 </div>
+                                                <Switch
+                                                    checked={accountExpired}
+                                                    onChange={
+                                                        handleAccountExpiryStatus
+                                                    }
+                                                    color="warning"
+                                                />
+                                            </div>
+
+                                            <div className="flex justify-between items-center">
                                                 <div>
-                                                    <h3 className="text-slate-700 font-customWeight text-sm">
+                                                    <h3 className="text-yellow-300 font-semibold">
                                                         Account Locked
                                                     </h3>
-                                                    <Switch
-                                                        checked={accountLocked}
-                                                        onChange={
-                                                            handleAccountLockStatus
-                                                        }
-                                                        inputProps={{
-                                                            "aria-label":
-                                                                "controlled",
-                                                        }}
-                                                    />
+                                                    <p className="text-gray-400 text-sm">
+                                                        Prevent login if account
+                                                        is locked
+                                                    </p>
                                                 </div>
+                                                <Switch
+                                                    checked={accountLocked}
+                                                    onChange={
+                                                        handleAccountLockStatus
+                                                    }
+                                                    color="warning"
+                                                />
+                                            </div>
+
+                                            <div className="flex justify-between items-center">
                                                 <div>
-                                                    <h3 className="text-slate-700 font-customWeight text-sm">
+                                                    <h3 className="text-yellow-300 font-semibold">
                                                         Account Enabled
                                                     </h3>
-                                                    <Switch
-                                                        checked={accountEnabled}
-                                                        onChange={
-                                                            handleAccountEnabledStatus
-                                                        }
-                                                        inputProps={{
-                                                            "aria-label":
-                                                                "controlled",
-                                                        }}
-                                                    />
+                                                    <p className="text-gray-400 text-sm">
+                                                        Enable or disable
+                                                        account
+                                                    </p>
                                                 </div>
-                                                <div className="mb-2">
-                                                    <h3 className="text-slate-700 font-customWeight text-sm">
-                                                        Credential Setting
-                                                    </h3>
-                                                    <div className="shadow-gray-300 shadow-md px-4 py-4 rounded-md">
-                                                        <p className="text-slate-700 text-sm">
-                                                            Your credential will
-                                                            expired{" "}
-                                                            <span>
-                                                                {
-                                                                    credentialExpireDate
-                                                                }
-                                                            </span>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    <h3 className="text-slate-700 font-customWeight text-sm">
-                                                        Credential Expired
-                                                    </h3>
-                                                    <Switch
-                                                        checked={
-                                                            credentialExpired
-                                                        }
-                                                        onChange={
-                                                            handleCredentialExpiredStatus
-                                                        }
-                                                        inputProps={{
-                                                            "aria-label":
-                                                                "controlled",
-                                                        }}
-                                                    />
+                                                <Switch
+                                                    checked={accountEnabled}
+                                                    onChange={
+                                                        handleAccountEnabledStatus
+                                                    }
+                                                    color="warning"
+                                                />
+                                            </div>
+
+                                            <div className="mb-2">
+                                                <h3 className="text-yellow-300 font-semibold mb-2">
+                                                    Credential Settings
+                                                </h3>
+                                                <div className="bg-gray-700 p-4 rounded-lg">
+                                                    <p className="text-gray-300 text-sm">
+                                                        Your credentials will
+                                                        expire on{" "}
+                                                        <span className="text-yellow-400 font-medium">
+                                                            {
+                                                                credentialExpireDate
+                                                            }
+                                                        </span>
+                                                    </p>
                                                 </div>
                                             </div>
-                                        </AccordionDetails>
-                                    </Accordion>
-                                </div>
 
-                                <div className="pt-10">
-                                    <h3 className="text-slate-800 text-lg font-semibold mb-2 px-2">
-                                        Last Login Session
-                                    </h3>
-                                    <div className="shadow-md shadow-gray-300 px-4 py-2 rounded-md">
-                                        <p className="text-slate-700 text-sm">
-                                            Your Last LogIn Session when you are
-                                            loggedin <br />
-                                            <span>{loginSession}</span>
-                                        </p>
-                                    </div>
+                                            <div className="flex justify-between items-center">
+                                                <div>
+                                                    <h3 className="text-yellow-300 font-semibold">
+                                                        Credential Expired
+                                                    </h3>
+                                                    <p className="text-gray-400 text-sm">
+                                                        Force password reset if
+                                                        expired
+                                                    </p>
+                                                </div>
+                                                <Switch
+                                                    checked={credentialExpired}
+                                                    onChange={
+                                                        handleCredentialExpiredStatus
+                                                    }
+                                                    color="warning"
+                                                />
+                                            </div>
+                                        </div>
+                                    </AccordionDetails>
+                                </Accordion>
+                            </div>
+
+                            <div className="pt-6">
+                                <h3 className="text-yellow-400 text-lg font-semibold mb-3">
+                                    Last Login Session
+                                </h3>
+                                <div className="bg-gray-700 p-4 rounded-lg">
+                                    <p className="text-gray-300">
+                                        Your last login session:{" "}
+                                        <span className="text-yellow-400 font-medium">
+                                            {loginSession}
+                                        </span>
+                                    </p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div className="flex-1 flex flex-col shadow-lg shadow-gray-300 gap-2 px-4 py-6">
-                        <div className="space-y-1">
-                            <h1 className="text-slate-800 flex items-center gap-1 text-2xl font-bold">
-                                <span>Authentication (MFA)</span>
+
+                    <div className="flex-1 flex flex-col bg-gray-800 rounded-2xl shadow-lg p-6">
+                        <div className="space-y-4 mb-6">
+                            <div className="flex items-center gap-3">
+                                <h1 className="text-yellow-400 text-2xl font-bold">
+                                    Multi-Factor Authentication
+                                </h1>
                                 <span
-                                    className={`${
+                                    className={`px-3 py-1 text-xs rounded-full font-semibold ${
                                         is2faEnabled
-                                            ? "bg-green-800"
-                                            : "bg-customRed"
-                                    } px-2 text-center py-1 text-xs mt-2 rounded-sm text-white`}
+                                            ? "bg-green-900 text-green-300"
+                                            : "bg-red-900 text-red-300"
+                                    }`}
                                 >
-                                    {is2faEnabled ? "Activated" : "Deactivated"}
+                                    {is2faEnabled ? "ACTIVE" : "INACTIVE"}
                                 </span>
-                            </h1>
-                            <h3 className="text-slate-800 text-xl font-semibold">
-                                Multi Factor Authentication
-                            </h3>
-                            <p className="text-slate-800 text-sm">
-                                Two Factor Authentication Add a additional layer
-                                of security to your account
+                            </div>
+                            <p className="text-gray-300">
+                                Two-factor authentication adds an additional
+                                layer of security to your account by requiring
+                                more than just a password to sign in.
                             </p>
                         </div>
 
-                        <div>
+                        <div className="mb-6">
                             <Buttons
                                 disabled={disabledLoader}
                                 onClickhandler={
                                     is2faEnabled ? disable2FA : enable2FA
                                 }
-                                className={`${
+                                className={`w-full py-3 rounded-lg font-semibold transition-colors duration-200 ${
                                     is2faEnabled
-                                        ? "bg-customRed"
-                                        : "bg-btnColor"
-                                } px-5 py-1 hover:text-slate-300 rounded-sm text-white mt-2`}
+                                        ? "bg-red-600 hover:bg-red-700 text-white"
+                                        : "bg-yellow-500 hover:bg-yellow-600 text-gray-900"
+                                }`}
                             >
                                 {disabledLoader ? (
-                                    <>Loading...</>
+                                    <span className="flex items-center justify-center">
+                                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-current mr-2"></div>
+                                        Processing...
+                                    </span>
                                 ) : (
                                     <>
                                         {is2faEnabled
-                                            ? "Disabled Two Factor Authentication"
-                                            : "Enable Two Factor Authentication"}
+                                            ? "Disable Two-Factor Authentication"
+                                            : "Enable Two-Factor Authentication"}
                                     </>
                                 )}
                             </Buttons>
                         </div>
+
                         {step === 2 && (
-                            <div className="py-3">
-                                <Accordion>
-                                    <AccordionSummary
-                                        expandIcon={<ArrowDropDownIcon />}
-                                        aria-controls="panel1-content"
-                                        id="panel1-header"
-                                    >
-                                        <h3 className="font-bold text-lg text-slate-700 uppercase">
-                                            QR Code To Scan
-                                        </h3>
-                                    </AccordionSummary>
-                                    <AccordionDetails>
-                                        <div className="">
-                                            <QRCode
-                                                value={qrCodeUrl}
-                                                size={200}
-                                                level="H"
-                                                includeMargin
-                                            />
-                                            <div className="flex items-center gap-2 mt-4">
-                                                <input
-                                                    type="text"
-                                                    placeholder="Enter 2FA code"
-                                                    value={code}
-                                                    required
-                                                    className="mt-4 border px-2 py-1 border-slate-800 rounded-md"
-                                                    onChange={(e) =>
-                                                        setCode(e.target.value)
-                                                    }
-                                                />
-                                                <button
-                                                    className="bg-btnColor text-white px-3 h-10 rounded-md mt-4"
-                                                    onClick={verify2FA}
-                                                >
-                                                    {twofaCodeLoader
-                                                        ? "Loading..."
-                                                        : "Verify 2FA"}
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </AccordionDetails>
-                                </Accordion>
+                            <div className="bg-gray-700 rounded-xl p-5">
+                                <h3 className="text-yellow-400 font-bold text-lg mb-4">
+                                    Scan QR Code
+                                </h3>
+                                <div className="flex flex-col items-center">
+                                    <div className="bg-white p-4 rounded-lg mb-4">
+                                        <QRCode
+                                            value={qrCodeUrl}
+                                            size={200}
+                                            level="H"
+                                            includeMargin
+                                        />
+                                    </div>
+                                    <p className="text-gray-300 text-sm mb-4 text-center">
+                                        Scan this QR code with your
+                                        authenticator app to set up two-factor
+                                        authentication.
+                                    </p>
+                                    <div className="flex flex-col w-full gap-3">
+                                        <input
+                                            type="text"
+                                            placeholder="Enter verification code"
+                                            value={code}
+                                            required
+                                            className="bg-gray-600 text-white px-4 py-3 rounded-lg border border-gray-500 focus:border-yellow-500 focus:outline-none"
+                                            onChange={(e) =>
+                                                setCode(e.target.value)
+                                            }
+                                        />
+                                        <Buttons
+                                            onClickhandler={verify2FA}
+                                            className="bg-yellow-500 text-gray-900 font-semibold py-3 rounded-lg hover:bg-yellow-600 transition-colors duration-200"
+                                        >
+                                            {twofaCodeLoader ? (
+                                                <span className="flex items-center justify-center">
+                                                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-gray-900 mr-2"></div>
+                                                    Verifying...
+                                                </span>
+                                            ) : (
+                                                "Verify Code"
+                                            )}
+                                        </Buttons>
+                                    </div>
+                                </div>
                             </div>
                         )}
                     </div>

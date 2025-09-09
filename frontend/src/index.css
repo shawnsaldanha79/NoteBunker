@@ -1,7 +1,6 @@
 @import "tailwindcss";
 
 @theme {
-    /* Color palette */
     --color-headerColor: #242530;
     --color-textColor: #ffffff;
     --color-btnColor: #0172f4;
@@ -9,29 +8,23 @@
     --color-customRed: rgba(172, 30, 35, 1);
     --color-testimonialCard: #f9f9f9;
 
-    /* Font families */
     /* --font-inter: Inter; */
 
-    /* Font sizes */
     --text-logoText: 30px;
     --text-customText: 15px;
     --text-tablehHeaderText: 16px;
     --text-headerText: 50px;
     --text-tableHeader: 15px;
 
-    /* Line heights */
     --leading-headerText: 60px;
     --leading-tableHeader: 25px;
 
-    /* Font weights */
     --font-weight-customWeight: 500;
 
-    /* Height values */
     --height-headerHeight: 74px;
     --max-height-navbarHeight: 420px;
     --min-height-customHeight: 530px;
 
-    /* Box shadows */
     --shadow-custom: 0 0 15px rgba(0, 0, 0, 0.3);
 }
 
@@ -42,83 +35,110 @@
 }
 
 .text-editor {
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    border: 1px solid #374151;
+    border-radius: 0.5rem;
+    background-color: #1f2937;
+    overflow: hidden;
 }
 
 .control-group {
-    padding: 0.5rem;
-    border-bottom: 1px solid #ccc;
-    background-color: #f8f9fa;
+    padding: 0.75rem;
+    border-bottom: 1px solid #374151;
+    background-color: #111827;
 }
 
 .button-group {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.25rem;
+    gap: 0.375rem;
 }
 
 .button-group button,
 .button-group select {
-    padding: 0.25rem 0.5rem;
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 3px;
+    padding: 0.5rem 0.75rem;
+    background: #1f2937;
+    border: 1px solid #374151;
+    border-radius: 0.375rem;
     cursor: pointer;
+    color: #e5e7eb;
+    transition: all 0.2s ease;
+    font-size: 0.875rem;
+}
+
+.button-group button:hover,
+.button-group select:hover {
+    background-color: #374151;
+    border-color: #f59e0b;
 }
 
 .button-group button.is-active {
-    background-color: #e2e8f0;
+    background-color: #f59e0b;
+    color: #1f2937;
+    border-color: #f59e0b;
 }
 
 .ProseMirror {
-    padding: 1rem;
+    padding: 1.25rem;
     min-height: 200px;
     outline: none;
+    background-color: #1f2937;
+    color: #e5e7eb;
 }
 
 .ProseMirror:focus {
     outline: none;
+    box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.3);
 }
 
 .tipTap-content {
-    min-height: 200px; 
+    min-height: 200px;
+    background-color: #1f2937;
+    color: #e5e7eb;
 }
 
-.tiptap, .tipTap-content {
+.tiptap,
+.tipTap-content {
     > * + * {
-        margin-top: 0.75em;
+        margin-top: 0.875em;
     }
 
     h1 {
         font-size: 2.5rem;
         font-weight: bold;
+        color: #f59e0b;
     }
     h2 {
-        font-size: 2 rem;
+        font-size: 2rem;
         font-weight: bold;
+        color: #f59e0b;
     }
     h3 {
         font-size: 1.8rem;
         font-weight: bold;
+        color: #f59e0b;
     }
     h4 {
         font-size: 1.6rem;
         font-weight: bold;
+        color: #f59e0b;
     }
     h5 {
         font-size: 1.4rem;
         font-weight: bold;
+        color: #f59e0b;
     }
     h6 {
         font-size: 1.2rem;
         font-weight: bold;
+        color: #f59e0b;
     }
 
     p {
         font-size: 1.1rem;
-        line-height: 1.2;
+        line-height: 1.6;
+        color: #e5e7eb;
     }
+
     ul,
     ol {
         padding: 0 1rem;
@@ -128,51 +148,108 @@
             margin-top: 0.25em;
             margin-bottom: 0.25em;
         }
+
+        li {
+            color: #e5e7eb;
+        }
     }
+
     ul {
         list-style-type: disc;
     }
+
     ol {
         list-style-type: decimal;
     }
 
     code {
-        background-color: rgb(234, 234, 234);
+        background-color: #374151;
         border-radius: 0.4rem;
-        color: rgb(50, 50, 50);
+        color: #f59e0b;
         font-size: 0.85rem;
         padding: 0.25em 0.3em;
+        font-family: "JetBrains Mono", "Fira Code", monospace;
     }
 
     pre {
-        background: rgb(50, 50, 50);
+        background: #111827;
+        border: 1px solid #374151;
         border-radius: 0.5rem;
-        color: rgb(234, 234, 234);
-        font-family: "JetBrainsMono", monospace;
+        color: #e5e7eb;
+        font-family: "JetBrains Mono", "Fira Code", monospace;
         margin: 1.5rem 0;
-        padding: 0.75rem 1rem;
-        line-height: 1rem;
+        padding: 1rem;
+        line-height: 1.5;
+        overflow-x: auto;
 
         code {
             background: none;
             color: inherit;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             padding: 0;
         }
     }
 
     blockquote {
-        border-left: 3px solid rgb(234, 234, 234);
-        color: rgb(50, 50, 50);
+        border-left: 4px solid #f59e0b;
+        background-color: rgba(245, 158, 11, 0.05);
+        color: #d1d5db;
         margin: 1.5rem 0;
-        padding-left: 1rem;
+        padding: 1rem 1.5rem;
+        font-style: italic;
     }
 
     hr {
         border: none;
-        border-top: 1px solid rgb(50, 50, 50);
+        border-top: 2px solid #374151;
         margin: 2rem 0;
     }
+
+    strong {
+        color: #f59e0b;
+        font-weight: 700;
+    }
+
+    a {
+        color: #f59e0b;
+        text-decoration: underline;
+    }
+
+    mark {
+        background-color: #f59e0b;
+        color: #1f2937;
+        padding: 0.1em 0.2em;
+        border-radius: 0.2em;
+    }
+}
+
+.ProseMirror::-webkit-scrollbar {
+    width: 8px;
+}
+
+.ProseMirror::-webkit-scrollbar-track {
+    background: #1f2937;
+}
+
+.ProseMirror::-webkit-scrollbar-thumb {
+    background: #374151;
+    border-radius: 4px;
+}
+
+.ProseMirror::-webkit-scrollbar-thumb:hover {
+    background: #4b5563;
+}
+
+.ProseMirror-focused .ProseMirror-selectednode {
+    outline: 2px solid #f59e0b;
+}
+
+.ProseMirror p.is-editor-empty:first-child::before {
+    color: #6b7280;
+    content: attr(data-placeholder);
+    float: left;
+    height: 0;
+    pointer-events: none;
 }
 
 @source "../src/**/*.{html,js}";

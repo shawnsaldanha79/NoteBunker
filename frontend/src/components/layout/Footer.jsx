@@ -10,34 +10,40 @@ const Footer = () => {
     const currentYear = new Date().getFullYear();
 
     return (
-        <footer className="bg-headerColor py-6 lg:py-2 min-h-28 z-50 relative">
-            <div className="xl:px-10 sm:px-6 px-4 min-h-28 flex lg:flex-row flex-col lg:gap-0 gap-5 justify-between items-center">
-                <ul className="flex flex-1 md:gap-6 gap-4 text-white flex-row items-center">
+        <footer className="bg-gray-900 py-8 border-t border-gray-800">
+            <div className="max-w-7xl mx-auto px-4 min-h-28 flex lg:flex-row flex-col lg:gap-0 gap-8 justify-between items-center">
+                <ul className="flex flex-1 md:gap-8 gap-6 text-gray-300 flex-row items-center">
                     <li>
                         <Link to="/about">
-                            <span className="hover:underline">About Us</span>
+                            <span className="hover:text-yellow-400 transition-colors duration-200">
+                                About Us
+                            </span>
                         </Link>
                     </li>
                     <li>
                         <Link to="/">
-                            <span className="hover:underline">Services</span>
+                            <span className="hover:text-yellow-400 transition-colors duration-200">
+                                Services
+                            </span>
                         </Link>
                     </li>
                     <li>
                         <Link to="/contact">
-                            <span className="hover:underline">Contact</span>
+                            <span className="hover:text-yellow-400 transition-colors duration-200">
+                                Contact
+                            </span>
                         </Link>
                     </li>
                     <li>
                         <Link to="/">
-                            <span className="hover:underline">
+                            <span className="hover:text-yellow-400 transition-colors duration-200">
                                 Privacy Policy
                             </span>
                         </Link>
                     </li>
                 </ul>
 
-                <p className="w-fit flex items-center text-white text-sm">
+                <p className="w-fit flex items-center text-gray-300 text-sm">
                     <span>
                         &copy;{currentYear} NoteBunker | All rights reserved.
                     </span>
@@ -45,28 +51,28 @@ const Footer = () => {
 
                 <div className="flex-1 flex flex-row gap-6 lg:justify-end justify-start items-center">
                     <Link
-                        className="text-white border h-10 w-10 flex justify-center items-center border-white rounded-full p-2 hover:bg-blue-600 transition-colors duration-300"
+                        className="text-gray-300 h-10 w-10 flex justify-center items-center rounded-full p-2 hover:text-yellow-400 hover:bg-gray-800 transition-colors duration-200"
                         to="https://facebook.com"
                     >
-                        <FaFacebook width={20} height={20} />
+                        <FaFacebook size={20} />
                     </Link>
                     <Link
-                        className="text-white border h-10 w-10 flex justify-center items-center border-white rounded-full p-2 hover:bg-blue-600 transition-colors duration-300"
+                        className="text-gray-300 h-10 w-10 flex justify-center items-center rounded-full p-2 hover:text-yellow-400 hover:bg-gray-800 transition-colors duration-200"
                         to="https://linkedin.com"
                     >
-                        <FaLinkedin width={20} height={20} />
+                        <FaLinkedin size={20} />
                     </Link>
                     <Link
-                        className="text-white border h-10 w-10 flex justify-center items-center border-white rounded-full p-2 hover:bg-blue-600 transition-colors duration-300"
+                        className="text-gray-300 h-10 w-10 flex justify-center items-center rounded-full p-2 hover:text-yellow-400 hover:bg-gray-800 transition-colors duration-200"
                         to="https://x.com"
                     >
-                        <FaXTwitter width={20} height={20} />
+                        <FaXTwitter size={20} />
                     </Link>
                     <Link
-                        className="text-white border h-10 w-10 flex justify-center items-center border-white rounded-full p-2 hover:bg-blue-600 transition-colors duration-300"
+                        className="text-gray-300 h-10 w-10 flex justify-center items-center rounded-full p-2 hover:text-yellow-400 hover:bg-gray-800 transition-colors duration-200"
                         to="https://instagram.com"
                     >
-                        <FaInstagram width={20} height={20} />
+                        <FaInstagram size={20} />
                     </Link>
                 </div>
             </div>

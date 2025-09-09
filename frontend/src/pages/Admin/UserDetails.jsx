@@ -112,7 +112,7 @@ const UserDetails = () => {
             });
             setIsEditingPassword(false);
             setValue("password", "");
-            toast.success("password update success");
+            toast.success("Password updated successfully");
         } catch (err) {
             toast.error("Error updating password " + err.response.data);
         } finally {
@@ -159,27 +159,28 @@ const UserDetails = () => {
     }
 
     return (
-        <div className="sm:px-12 px-4 py-10">
+        <div className="sm:px-12 px-4 py-10 bg-gray-900 min-h-screen">
             {loading ? (
                 <div className="flex flex-col justify-center items-center h-72">
                     <BeatLoader
                         height="70"
                         width="70"
-                        color="#4fa94d"
+                        color="#fbbf24"
                         loading={true}
                     />
-                    <span>Please wait...</span>
+                    <span className="text-gray-300 mt-4">
+                        Loading user details...
+                    </span>
                 </div>
             ) : (
                 <>
-                    <div className="lg:w-[70%] sm:w-[90%] w-full mx-auto shadow-lg shadow-gray-300 p-8 rounded-md">
+                    <div className="lg:w-[70%] sm:w-[90%] w-full mx-auto bg-gray-800 rounded-2xl shadow-2xl p-8 mb-6">
                         <div>
-                            <h1 className="text-slate-800 text-2xl font-bold pb-4">
+                            <h1 className="text-yellow-400 text-2xl font-bold pb-4 border-b border-gray-700">
                                 Profile Information
-                                <hr />
                             </h1>
                             <form
-                                className="flex flex-col gap-2"
+                                className="flex flex-col gap-4 mt-4"
                                 onSubmit={handleSubmit(handleSavePassword)}
                             >
                                 <InputField
@@ -228,7 +229,7 @@ const UserDetails = () => {
                                                 !isEditingPassword
                                             )
                                         }
-                                        className="bg-customRed mb-0 w-fit px-4 py-2 rounded-md text-white"
+                                        className="bg-yellow-500 mb-0 w-fit px-4 py-2 rounded-lg text-gray-900 hover:bg-yellow-600 transition-colors duration-200"
                                     >
                                         Click To Edit Password
                                     </Buttons>
@@ -236,7 +237,7 @@ const UserDetails = () => {
                                     <div className="flex items-center gap-2">
                                         <Buttons
                                             type="submit"
-                                            className="bg-btnColor mb-0 w-fit px-4 py-2 rounded-md text-white"
+                                            className="bg-yellow-500 mb-0 w-fit px-4 py-2 rounded-lg text-gray-900 hover:bg-yellow-600 transition-colors duration-200"
                                         >
                                             {passwordLoader
                                                 ? "Loading.."
@@ -249,7 +250,7 @@ const UserDetails = () => {
                                                     !isEditingPassword
                                                 )
                                             }
-                                            className="bg-customRed mb-0 w-fit px-4 py-2 rounded-md text-white"
+                                            className="bg-red-600 mb-0 w-fit px-4 py-2 rounded-lg text-white hover:bg-red-700 transition-colors duration-200"
                                         >
                                             Cancel
                                         </Buttons>
@@ -258,25 +259,24 @@ const UserDetails = () => {
                             </form>
                         </div>
                     </div>
-                    <div className="lg:w-[70%] sm:w-[90%] w-full mx-auto shadow-lg shadow-gray-300 p-8 rounded-md mt-6">
-                        <h1 className="text-slate-800 text-2xl font-bold pb-4">
+                    <div className="lg:w-[70%] sm:w-[90%] w-full mx-auto bg-gray-800 rounded-2xl shadow-2xl p-8">
+                        <h1 className="text-yellow-400 text-2xl font-bold pb-4 border-b border-gray-700">
                             Admin Actions
-                            <hr />
                         </h1>
 
                         <div className="py-4 flex sm:flex-row flex-col sm:items-center items-start gap-4">
                             <div className="flex items-center gap-2">
-                                <label className="text-slate-600 text-lg font-semibold">
+                                <label className="text-gray-300 text-lg font-semibold">
                                     Role:
                                 </label>
                                 <select
-                                    className="px-8 py-1 rounded-md border-2 uppercase border-slate-600"
+                                    className="px-4 py-2 rounded-lg bg-gray-700 text-gray-200 border border-gray-600"
                                     value={selectedRole}
                                     onChange={handleRoleChange}
                                 >
                                     {roles.map((role) => (
                                         <option
-                                            className="bg-slate-200 flex flex-col gap-4 uppercase text-slate-700"
+                                            className="bg-gray-700 uppercase text-gray-200"
                                             key={role.roleId}
                                             value={role.roleName}
                                         >
@@ -285,24 +285,24 @@ const UserDetails = () => {
                                     ))}
                                 </select>
                             </div>
-                            <button
-                                className="bg-btnColor hover:text-slate-300 px-4 py-2 rounded-md text-white"
-                                onClick={handleUpdateRole}
+                            <Buttons
+                                className="bg-yellow-500 hover:bg-yellow-600 px-4 py-2 rounded-lg text-gray-900 transition-colors duration-200"
+                                onClickhandler={handleUpdateRole}
                             >
                                 {updateRoleLoader
                                     ? "Loading..."
                                     : "Update Role"}
-                            </button>
+                            </Buttons>
                         </div>
 
-                        <hr className="py-2" />
+                        <hr className="py-2 border-gray-700" />
                         <div className="flex flex-col gap-4 py-4">
                             <div className="flex items-center gap-2">
-                                <label className="text-slate-600 text-sm font-semibold uppercase">
+                                <label className="text-gray-300 text-sm font-semibold uppercase">
                                     Account Locked
                                 </label>
                                 <input
-                                    className="text-14 w-5 h-5"
+                                    className="w-5 h-5 text-yellow-500 bg-gray-700 border-gray-600 rounded focus:ring-yellow-500"
                                     type="checkbox"
                                     name="lock"
                                     checked={!user?.accountNonLocked}
@@ -315,11 +315,11 @@ const UserDetails = () => {
                                 />
                             </div>
                             <div className="flex items-center gap-2">
-                                <label className="text-slate-600 text-sm font-semibold uppercase">
+                                <label className="text-gray-300 text-sm font-semibold uppercase">
                                     Account Expired
                                 </label>
                                 <input
-                                    className="text-14 w-5 h-5"
+                                    className="w-5 h-5 text-yellow-500 bg-gray-700 border-gray-600 rounded focus:ring-yellow-500"
                                     type="checkbox"
                                     name="expire"
                                     checked={!user?.accountNonExpired}
@@ -332,11 +332,11 @@ const UserDetails = () => {
                                 />
                             </div>
                             <div className="flex items-center gap-2">
-                                <label className="text-slate-600 text-sm font-semibold uppercase">
+                                <label className="text-gray-300 text-sm font-semibold uppercase">
                                     Account Disabled
                                 </label>
                                 <input
-                                    className="text-14 w-5 h-5"
+                                    className="w-5 h-5 text-yellow-500 bg-gray-700 border-gray-600 rounded focus:ring-yellow-500"
                                     type="checkbox"
                                     name="enabled"
                                     checked={!user?.enabled}
@@ -349,11 +349,11 @@ const UserDetails = () => {
                                 />
                             </div>
                             <div className="flex items-center gap-2">
-                                <label className="text-slate-600 text-sm font-semibold uppercase">
+                                <label className="text-gray-300 text-sm font-semibold uppercase">
                                     Credentials Expired
                                 </label>
                                 <input
-                                    className="text-14 w-5 h-5"
+                                    className="w-5 h-5 text-yellow-500 bg-gray-700 border-gray-600 rounded focus:ring-yellow-500"
                                     type="checkbox"
                                     name="credentialsExpire"
                                     checked={!user?.credentialsNonExpired}

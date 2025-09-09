@@ -12,7 +12,6 @@ export const ContextProvider = ({ children }) => {
         : false;
     const [token, setToken] = useState(getToken);
     const [currentUser, setCurrrentUser] = useState(null);
-    const [openSidebar, setOpenSidebar] = useState(false);
     const [isAdminUser, setIsAdminUser] = useState(isAdmin);
 
     const fetchUser = async () => {
@@ -48,8 +47,6 @@ export const ContextProvider = ({ children }) => {
                 setToken,
                 currentUser,
                 setCurrrentUser,
-                openSidebar,
-                setOpenSidebar,
                 isAdminUser,
                 setIsAdminUser,
             }}

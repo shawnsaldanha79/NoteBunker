@@ -53,10 +53,10 @@ const AuditLogsDetails = () => {
     }
 
     return (
-        <div className="p-4">
+        <div className="p-6 bg-gray-900 min-h-screen">
             <div className="py-6">
                 {auditLogs.length > 0 && (
-                    <h1 className="text-center sm:text-2xl text-lg font-bold text-slate-800">
+                    <h1 className="text-center sm:text-2xl text-lg font-bold text-yellow-400">
                         Audit Log for Note ID - {noteId}
                     </h1>
                 )}
@@ -66,17 +66,19 @@ const AuditLogsDetails = () => {
                     <BeatLoader
                         height="70"
                         width="70"
-                        color="#4fa94d"
+                        color="#fbbf24"
                         loading={true}
                     />
-                    <span>Please wait...</span>
+                    <span className="text-gray-300 mt-4">
+                        Loading audit details...
+                    </span>
                 </div>
             ) : auditLogs.length === 0 ? (
                 <Errors message="Invalid NoteId" />
             ) : (
-                <div className="overflow-x-auto w-full">
+                <div className="overflow-x-auto w-full bg-gray-800 rounded-2xl p-4">
                     <DataGrid
-                        className="w-fit mx-auto px-0"
+                        className="w-full"
                         rows={rows}
                         columns={noteAuditLogColumns}
                         initialState={{
@@ -89,6 +91,27 @@ const AuditLogsDetails = () => {
                         disableRowSelectionOnClick
                         pageSizeOptions={[6]}
                         disableColumnResize
+                        sx={{
+                            color: "#e5e7eb",
+                            "& .MuiDataGrid-cell": {
+                                borderColor: "#4b5563",
+                            },
+                            "& .MuiDataGrid-columnHeaders": {
+                                backgroundColor: "#374151",
+                                color: "#fbbf24",
+                                fontSize: "1rem",
+                            },
+                            "& .MuiDataGrid-footerContainer": {
+                                backgroundColor: "#374151",
+                                color: "#e5e7eb",
+                            },
+                            "& .MuiTablePagination-root": {
+                                color: "#e5e7eb",
+                            },
+                            "& .MuiIconButton-root": {
+                                color: "#e5e7eb",
+                            },
+                        }}
                     />
                 </div>
             )}

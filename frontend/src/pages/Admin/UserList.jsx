@@ -51,26 +51,28 @@ const UserList = () => {
     }
 
     return (
-        <div className="p-4">
+        <div className="p-6 bg-gray-900 min-h-screen">
             <div className="py-4">
-                <h1 className="text-center text-2xl font-bold text-slate-800 uppercase">
+                <h1 className="text-center text-2xl font-bold text-yellow-400 uppercase">
                     All Users
                 </h1>
             </div>
-            <div className="overflow-x-auto w-full mx-auto">
+            <div className="overflow-x-auto w-full mx-auto bg-gray-800 rounded-2xl p-4">
                 {loading ? (
                     <div className="flex flex-col justify-center items-center h-72">
                         <BeatLoader
                             height="70"
                             width="70"
-                            color="#4fa94d"
+                            color="#fbbf24"
                             loading={true}
                         />
-                        <span>Please wait...</span>
+                        <span className="text-gray-300 mt-4">
+                            Loading users...
+                        </span>
                     </div>
                 ) : (
                     <DataGrid
-                        className="w-fit mx-auto"
+                        className="w-full"
                         rows={rows}
                         columns={userListColumns}
                         initialState={{
@@ -83,6 +85,27 @@ const UserList = () => {
                         disableRowSelectionOnClick
                         pageSizeOptions={[6]}
                         disableColumnResize
+                        sx={{
+                            color: "#e5e7eb",
+                            "& .MuiDataGrid-cell": {
+                                borderColor: "#4b5563",
+                            },
+                            "& .MuiDataGrid-columnHeaders": {
+                                backgroundColor: "#374151",
+                                color: "#fbbf24",
+                                fontSize: "1rem",
+                            },
+                            "& .MuiDataGrid-footerContainer": {
+                                backgroundColor: "#374151",
+                                color: "#e5e7eb",
+                            },
+                            "& .MuiTablePagination-root": {
+                                color: "#e5e7eb",
+                            },
+                            "& .MuiIconButton-root": {
+                                color: "#e5e7eb",
+                            },
+                        }}
                     />
                 )}
             </div>

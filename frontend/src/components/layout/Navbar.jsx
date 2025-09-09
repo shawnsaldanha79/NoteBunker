@@ -23,17 +23,19 @@ const Navbar = () => {
     };
 
     return (
-        <header className="h-headerHeight z-50 text-textColor bg-headerColor shadow-sm flex items-center sticky top-0">
-            <nav className="sm:px-10 px-4 flex w-full h-full items-center justify-between">
-                <Link to="/">
-                    <h3 className="text-logoText">NoteBunker</h3>
+        <header className="h-16 z-50 text-gray-100 bg-gray-900 shadow-lg border-b border-gray-800 flex items-center sticky top-0">
+            <nav className="sm:px-8 px-4 flex w-full h-full items-center justify-between">
+                <Link to="/" className="flex items-center gap-2">
+                    <h3 className="text-yellow-400 text-xl font-bold">
+                        NoteBunker
+                    </h3>
                 </Link>
                 <ul
-                    className={`lg:static absolute left-0 top-16 w-full lg:w-fit lg:px-0 sm:px-10 px-4 lg:bg-transparent bg-headerColor ${
+                    className={`lg:static absolute left-0 top-16 w-full lg:w-fit lg:px-0 sm:px-8 px-4 lg:bg-transparent bg-gray-900 ${
                         headerToggle
-                            ? "min-h-fit max-h-navbarHeight lg:py-0 py-4 shadow-md shadow-slate-700 lg:shadow-none"
+                            ? "min-h-fit max-h-96 lg:py-0 py-4 shadow-lg lg:shadow-none border-b border-gray-800"
                             : "h-0 overflow-hidden"
-                    } lg:h-auto transition-all duration-100 text-textColor flex lg:flex-row flex-col lg:gap-8 gap-2`}
+                    } lg:h-auto transition-all duration-200 text-gray-100 flex lg:flex-row flex-col lg:gap-6 gap-3`}
                 >
                     {token && (
                         <>
@@ -41,19 +43,19 @@ const Navbar = () => {
                                 <li
                                     className={`${
                                         pathName === "/notes"
-                                            ? "font-semibold"
-                                            : ""
-                                    } py-2 cursor-pointer hover:text-slate-300`}
+                                            ? "text-yellow-400 font-semibold"
+                                            : "text-gray-300"
+                                    } py-2 cursor-pointer hover:text-yellow-400 transition-colors duration-200`}
                                 >
                                     My Notes
                                 </li>
                             </Link>
                             <Link to="/create-note">
                                 <li
-                                    className={`py-2 cursor-pointer hover:text-slate-300 ${
+                                    className={`py-2 cursor-pointer hover:text-yellow-400 transition-colors duration-200 ${
                                         pathName === "/create-note"
-                                            ? "font-semibold"
-                                            : ""
+                                            ? "text-yellow-400 font-semibold"
+                                            : "text-gray-300"
                                     }`}
                                 >
                                     Create Note
@@ -65,8 +67,10 @@ const Navbar = () => {
                     <Link to="/contact">
                         <li
                             className={`${
-                                pathName === "/contact" ? "font-semibold" : ""
-                            } py-2 cursor-pointer hover:text-slate-300`}
+                                pathName === "/contact"
+                                    ? "text-yellow-400 font-semibold"
+                                    : "text-gray-300"
+                            } py-2 cursor-pointer hover:text-yellow-400 transition-colors duration-200`}
                         >
                             Contact
                         </li>
@@ -74,8 +78,10 @@ const Navbar = () => {
 
                     <Link to="/about">
                         <li
-                            className={`py-2 cursor-pointer hover:text-slate-300 ${
-                                pathName === "/about" ? "font-semibold" : ""
+                            className={`py-2 cursor-pointer hover:text-yellow-400 transition-colors duration-200 ${
+                                pathName === "/about"
+                                    ? "text-yellow-400 font-semibold"
+                                    : "text-gray-300"
                             }`}
                         >
                             About
@@ -86,10 +92,10 @@ const Navbar = () => {
                         <>
                             <Link to="/profile">
                                 <li
-                                    className={`py-2 cursor-pointer hover:text-slate-300 ${
+                                    className={`py-2 cursor-pointer hover:text-yellow-400 transition-colors duration-200 ${
                                         pathName === "/profile"
-                                            ? "font-semibold"
-                                            : ""
+                                            ? "text-yellow-400 font-semibold"
+                                            : "text-gray-300"
                                     }`}
                                 >
                                     Profile
@@ -98,10 +104,10 @@ const Navbar = () => {
                             {isAdminUser && (
                                 <Link to="/admin/users">
                                     <li
-                                        className={`py-2 cursor-pointer uppercase hover:text-slate-300 ${
+                                        className={`py-2 cursor-pointer uppercase hover:text-yellow-400 transition-colors duration-200 ${
                                             pathName.startsWith("/admin")
-                                                ? "font-semibold"
-                                                : ""
+                                                ? "text-yellow-400 font-semibold"
+                                                : "text-gray-300"
                                         }`}
                                     >
                                         Admin
@@ -110,14 +116,14 @@ const Navbar = () => {
                             )}
                             <button
                                 onClick={handleLogout}
-                                className="w-24 text-center bg-customRed font-semibold px-4 py-2 rounded-sm cursor-pointer hover:text-slate-300"
+                                className="w-24 text-center bg-red-600 font-semibold px-4 py-2 rounded-lg cursor-pointer hover:bg-red-700 transition-colors duration-200"
                             >
                                 LogOut
                             </button>
                         </>
                     ) : (
                         <Link to="/signup">
-                            <li className="w-24 text-center bg-btnColor font-semibold px-4 py-2 rounded-sm cursor-pointer hover:text-slate-300">
+                            <li className="w-24 text-center bg-yellow-500 text-gray-900 font-semibold px-4 py-2 rounded-lg cursor-pointer hover:bg-yellow-600 transition-colors duration-200">
                                 SignUp
                             </li>
                         </Link>
@@ -125,7 +131,7 @@ const Navbar = () => {
                 </ul>
                 <span
                     onClick={() => setHeaderToggle(!headerToggle)}
-                    className="lg:hidden block cursor-pointer text-textColor shadow-md hover:text-slate-400"
+                    className="lg:hidden block cursor-pointer text-gray-100 hover:text-yellow-400 transition-colors duration-200"
                 >
                     {headerToggle ? (
                         <RxCross2 className="text-2xl" />

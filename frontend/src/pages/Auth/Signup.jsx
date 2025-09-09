@@ -48,7 +48,7 @@ const Signup = () => {
         try {
             setLoading(true);
             const response = await api.post("/auth/public/signup", sendData);
-            toast.success("Register Successful");
+            toast.success("Registration Successful");
             reset();
             if (response.data) {
                 navigate("/login");
@@ -58,7 +58,7 @@ const Signup = () => {
                 error?.response?.data?.message ===
                 "Error: Username is already taken!"
             ) {
-                setError("username", { message: "username is already taken" });
+                setError("username", { message: "Username is already taken" });
             } else if (
                 error?.response?.data?.message ===
                 "Error: Email is already in use!"
@@ -75,50 +75,51 @@ const Signup = () => {
     }, [navigate, token]);
 
     return (
-        <div className="min-h-[calc(100vh-74px)] flex justify-center items-center">
+        <div className="min-h-screen bg-gray-900 flex justify-center items-center py-8 px-4">
             <form
                 onSubmit={handleSubmit(onSubmitHandler)}
-                className="sm:w-[450px] w-[360px] shadow-custom py-6 sm:px-8 px-4"
+                className="sm:w-[450px] w-full max-w-md bg-gray-800 rounded-2xl shadow-2xl py-8 sm:px-8 px-6"
             >
-                <div>
-                    <h1 className="text-center font-bold text-2xl">
-                        Register Here
+                <div className="text-center mb-6">
+                    <h1 className="text-yellow-400 font-bold text-2xl mb-2">
+                        Create Account
                     </h1>
-                    <p className="text-slate-600 text-center">
-                        Enter your credentials to create new account
+                    <p className="text-gray-400 mb-6">
+                        Enter your details to create a new account
                     </p>
-                    <div className="flex items-center justify-between gap-1 py-5">
+
+                    <div className="flex flex-col gap-3 mb-6">
                         <a
                             href={`${apiUrl}/oauth2/authorization/google`}
-                            className="flex gap-1 items-center justify-center flex-1 border p-2 shadow-sm shadow-slate-200 rounded-md hover:bg-slate-300 transition-all duration-300"
+                            className="flex gap-2 items-center justify-center bg-gray-700 p-3 rounded-lg hover:bg-gray-600 transition-colors duration-200"
                         >
-                            <GrGoogle className="text-2xl" />
-                            <span className="font-semibold sm:text-customText text-xs">
-                                Login with Google
+                            <GrGoogle className="text-xl text-red-400" />
+                            <span className="font-semibold text-gray-200">
+                                Sign up with Google
                             </span>
                         </a>
                         <a
                             href={`${apiUrl}/oauth2/authorization/github`}
-                            className="flex gap-1 items-center justify-center flex-1 border p-2 shadow-sm shadow-slate-200 rounded-md hover:bg-slate-300 transition-all duration-300"
+                            className="flex gap-2 items-center justify-center bg-gray-700 p-3 rounded-lg hover:bg-gray-600 transition-colors duration-200"
                         >
-                            <GrGithub className="text-2xl" />
-                            <span className="font-semibold sm:text-customText text-xs">
-                                Login with Github
+                            <GrGithub className="text-xl text-gray-200" />
+                            <span className="font-semibold text-gray-200">
+                                Sign up with Github
                             </span>
                         </a>
                     </div>
 
-                    <Divider className="font-semibold">OR</Divider>
+                    <Divider className="text-gray-400 mb-6">OR</Divider>
                 </div>
 
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-4 mb-6">
                     <InputField
                         label="Username"
                         required
                         id="username"
                         type="text"
                         message="*Username is required"
-                        placeholder="type your username"
+                        placeholder="Choose a username"
                         register={register}
                         errors={errors}
                     />
@@ -128,7 +129,7 @@ const Signup = () => {
                         id="email"
                         type="email"
                         message="*Email is required"
-                        placeholder="type your email"
+                        placeholder="Enter your email"
                         register={register}
                         errors={errors}
                     />
@@ -138,25 +139,32 @@ const Signup = () => {
                         id="password"
                         type="password"
                         message="*Password is required"
-                        placeholder="type your password"
+                        placeholder="Create a password"
                         register={register}
                         errors={errors}
                         min={6}
                     />
                 </div>
+
                 <Buttons
                     disabled={loading}
                     onClickhandler={() => {}}
-                    className="bg-customRed font-semibold flex justify-center text-white w-full py-2 hover:text-slate-400 transition-colors duration-100 rounded-sm my-3"
-                    type="text"
+                    className="bg-yellow-500 text-gray-900 font-semibold w-full py-3 hover:bg-yellow-600 transition-colors duration-200 rounded-lg mb-6"
                 >
-                    {loading ? <span>Loading...</span> : "Register"}
+                    {loading ? (
+                        <span className="flex items-center justify-center">
+                            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-gray-900 mr-2"></div>
+                            Creating account...
+                        </span>
+                    ) : (
+                        "Create Account"
+                    )}
                 </Buttons>
 
-                <p className="text-center text-sm text-slate-700 mt-2">
+                <p className="text-center text-gray-400 text-sm">
                     Already have an account?{" "}
                     <Link
-                        className="font-semibold underline hover:text-black"
+                        className="text-yellow-400 font-semibold hover:text-yellow-300 transition-colors duration-200"
                         to="/login"
                     >
                         Login

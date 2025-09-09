@@ -8,18 +8,18 @@ import moment from "moment";
 const NoteItems = ({ parsedContent, id, createdAt }) => {
     const formattedDate = moment(createdAt).format("D MMMM YYYY");
     return (
-        <div className="sm:px-5 px-2 py-5 shadow-md bg-noteColor shadow-white rounded-lg min-h-96 max-h-96 relative flex flex-col">
-            <div className="flex-grow overflow-hidden mb-12">
-                <div className="text-black font-customWeight tipTap-content h-full overflow-y-auto">
+        <div className="bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 min-h-96 max-h-96 flex flex-col group">
+            <div className="flex-grow overflow-hidden mb-4">
+                <div className="text-gray-100 font-normal tipTap-content h-full overflow-y-auto">
                     {parse(parsedContent)}
                 </div>
             </div>
-            <div className="flex justify-between items-center absolute bottom-5 sm:px-5 px-2 left-0 w-full text-slate-700">
-                <span className="text-sm">{formattedDate}</span>
+            <div className="flex justify-between items-center mt-auto pt-4 border-t border-gray-700">
+                <span className="text-sm text-gray-400">{formattedDate}</span>
                 <Link to={`/notes/${id}`}>
-                    <Tooltip title="View Note">
-                        <IconButton>
-                            <MdRemoveRedEye className="text-slate-700" />
+                    <Tooltip title="View Note" arrow>
+                        <IconButton className="text-yellow-400 hover:text-yellow-300 hover:bg-yellow-400/10 transition-colors duration-200">
+                            <MdRemoveRedEye className="text-current" />
                         </IconButton>
                     </Tooltip>
                 </Link>

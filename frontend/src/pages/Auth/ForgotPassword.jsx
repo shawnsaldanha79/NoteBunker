@@ -55,43 +55,55 @@ const ForgotPassword = () => {
     }, [token, navigate]);
 
     return (
-        <div className="min-h-[calc(100vh-74px)] flex justify-center items-center">
+        <div className="min-h-screen bg-gray-900 flex justify-center items-center py-8 px-4">
             <form
                 onSubmit={handleSubmit(onPasswordForgotHandler)}
-                className="sm:w-[450px] w-[360px] shadow-custom py-8 sm:px-8 px-4"
+                className="sm:w-[450px] w-full max-w-md bg-gray-800 rounded-2xl shadow-2xl py-8 sm:px-8 px-6"
             >
-                <div>
-                    <h1 className="text-center font-bold text-2xl">
+                <div className="text-center mb-6">
+                    <h1 className="text-yellow-400 font-bold text-2xl mb-2">
                         Forgot Password?
                     </h1>
-                    <p className="text-slate-600 text-center">
-                        Enter your email a Password reset email will sent
+                    <p className="text-gray-400">
+                        Enter your email and a password reset link will be sent
                     </p>
                 </div>
-                <Divider className="font-semibold pb-4"></Divider>
 
-                <div className="flex flex-col gap-2 mt-4">
+                <Divider className="bg-gray-700 mb-6" />
+
+                <div className="flex flex-col gap-4 mb-6 mt-3">
                     <InputField
                         label="Email"
                         required
                         id="email"
                         type="email"
                         message="*Email is required"
-                        placeholder="enter your email"
+                        placeholder="Enter your email"
                         register={register}
                         errors={errors}
                     />
                 </div>
+
                 <Buttons
                     disabled={loading}
                     onClickhandler={() => {}}
-                    className="bg-customRed font-semibold text-white w-full py-2 hover:text-slate-400 transition-colors duration-100 rounded-sm my-3"
-                    type="text"
+                    className="bg-yellow-500 text-gray-900 font-semibold w-full py-3 hover:bg-yellow-600 transition-colors duration-200 rounded-lg mb-4"
                 >
-                    {loading ? <span>Loading...</span> : "Send"}
+                    {loading ? (
+                        <span className="flex items-center justify-center">
+                            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-gray-900 mr-2"></div>
+                            Sending...
+                        </span>
+                    ) : (
+                        "Send Reset Link"
+                    )}
                 </Buttons>
-                <p className="text-sm text-slate-700">
-                    <Link className="underline hover:text-black" to="/login">
+
+                <p className="text-center text-gray-400 text-sm">
+                    <Link
+                        className="text-yellow-400 hover:text-yellow-300 transition-colors duration-200"
+                        to="/login"
+                    >
                         Back To Login
                     </Link>
                 </p>
